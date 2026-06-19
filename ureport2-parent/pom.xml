@@ -1,13 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.bstek.ureport</groupId>
+
+	<groupId>io.github.jiangood</groupId>
 	<artifactId>ureport2-parent</artifactId>
-	<version>2.0.6</version>
+	<version>${revision}</version>
 	<packaging>pom</packaging>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+
+	<name>UReport2</name>
+	<description>基于Spring架构的高性能纯Java报表引擎</description>
+	<url>https://github.com/jiangood/ureport2</url>
 	<licenses>
 		<license>
 			<name>The Apache License, Version 2.0</name>
@@ -16,21 +18,107 @@
 	</licenses>
 	<developers>
 		<developer>
-			<name>Gaojie</name>
-			<email>jacky.gao@bstek.com</email>
-			<organization>Bstek</organization>
-			<organizationUrl>http://www.bstek.com</organizationUrl>
+			<name>jiangood</name>
+			<email>410518072@qq.com</email>
 		</developer>
 	</developers>
 	<scm>
-		<connection>https://github.com/youseries/ureport.git</connection>
-		<developerConnection>https://github.com/youseries/ureport.git</developerConnection>
-		<url>https://github.com/youseries/ureport</url>
+		<connection>scm:git:git:github.com/jiangood/ureport2.git</connection>
+		<developerConnection>scm:git@github.com:jiangood/ureport2.git</developerConnection>
+		<url>https://github.com/jiangood/ureport2/tree/master</url>
 	</scm>
-	<organization>
-		<name>Bstek</name>
-		<url>http://www.bstek.com</url>
-	</organization>
+
+	<properties>
+		<revision>3.0.0</revision>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		<java.version>17</java.version>
+		<compile.version>17</compile.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+	</properties>
+
+	<modules>
+		<module>../ureport2-core</module>
+		<module>../ureport2-console</module>
+		<module>../ureport2-font</module>
+	</modules>
+
+	<profiles>
+		<profile>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<id>publish</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<version>0.10.0</version>
+						<extensions>true</extensions>
+						<configuration>
+							<autoPublish>true</autoPublish>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.12.0</version>
+						<configuration>
+							<encoding>utf-8</encoding>
+							<charset>utf-8</charset>
+							<docencoding>utf-8</docencoding>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.4.0</version>
+						<executions>
+							<execution>
+								<id>oss</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>3.2.8</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<configuration>
+									<gpgArguments>
+										<arg>--pinentry-mode</arg>
+										<arg>loopback</arg>
+									</gpgArguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 	<build>
 		<resources>
 			<resource>
@@ -99,87 +187,52 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.4</version>
+				<version>3.14.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<encoding>utf-8</encoding>
+					<source>${compile.version}</source>
+					<target>${compile.version}</target>
+					<compilerArgument>-Xlint:unchecked</compilerArgument>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-			  <groupId>org.apache.maven.plugins</groupId>
-			  <artifactId>maven-release-plugin</artifactId>
-			  <version>2.5.3</version>
-			</plugin>			
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.7</version>
-				<extensions>true</extensions>
-				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
-				</configuration>
-			</plugin>
-			<plugin>
-		      <groupId>org.apache.maven.plugins</groupId>
-		      <artifactId>maven-source-plugin</artifactId>
-		      <version>2.2.1</version>
-		      <executions>
-		        <execution>
-		          <id>attach-sources</id>
-		          <goals>
-		            <goal>jar-no-fork</goal>
-		          </goals>
-		        </execution>
-		      </executions>
-		    </plugin>
-		    <plugin>
-		      <groupId>org.apache.maven.plugins</groupId>
-		      <artifactId>maven-javadoc-plugin</artifactId>
-		      <version>2.9.1</version>
-		      <executions>
-		        <execution>
-		          <id>attach-javadocs</id>
-		          <goals>
-		            <goal>jar</goal>
-		          </goals>
-		        </execution>
-		      </executions>
-		    </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.5</version>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<configuration>
+					<updatePomFile>true</updatePomFile>
+					<flattenMode>resolveCiFriendliesOnly</flattenMode>
+				</configuration>
 				<executions>
 					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
+						<id>flatten</id>
+						<phase>process-resources</phase>
 						<goals>
-							<goal>sign</goal>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
 						</goals>
 					</execution>
 				</executions>
-			</plugin>		    			
+			</plugin>
 		</plugins>
 	</build>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-		</repository>
-	</distributionManagement>
-
-	<name>UReport2 Parent Project</name>
-	<url>https://github.com/youseries/ureport/tree/master/ureport2-parent</url>
-	<issueManagement>
-		<url>${jira.browse.url}/VELOCITY</url>
-	</issueManagement>
-	<description>UReport2 Parent Project</description>
 </project>

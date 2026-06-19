@@ -1,0 +1,57 @@
+name: Publish Maven
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract Tag
+        id: tag
+        uses: aaronbarnaby/get-tag@v1.0.0
+        with:
+          without_prefix_v: true
+
+      - name: Extract pom.xml version
+        id: pom-version
+        run: |
+          POM_VERSION=$(awk '/<artifactId>ureport2-parent<\/artifactId>/{found=1} found && /<revision>[0-9]/{print; exit}' ureport2-parent/pom.xml | grep -oP '<revision>\K[^<]+' | tr -d '\r')
+          echo "pom_version=$POM_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Validate pom.xml version
+        run: |
+          TAG_VERSION="${{ steps.tag.outputs.tag }}"
+          POM_VERSION="${{ steps.pom-version.outputs.pom_version }}"
+
+          echo "Tag version: $TAG_VERSION"
+          echo "POM version: $POM_VERSION"
+
+          if [ "$TAG_VERSION" != "$POM_VERSION" ]; then
+            echo "::error::Tag version ($TAG_VERSION) does not match pom.xml version ($POM_VERSION)"
+            exit 1
+          fi
+
+          echo "Version matches tag!"
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+
+      - name: Publish Maven
+        run: mvn -q deploy -DskipTests -P publish -f ureport2-parent/pom.xml
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE_KEY }}
