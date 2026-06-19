@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.bstek.ureport.utils.UStringUtils;
-import org.springframework.context.ApplicationContext;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.chart.ChartData;
@@ -51,7 +50,6 @@ public class Context {
 	private Map<String,Object> variableMap=new HashMap<String,Object>();
 	private Map<Integer,List<Row>> currentPageRowsMap=new HashMap<Integer,List<Row>>();
 	private Map<String,Dataset> datasetMap;
-	private ApplicationContext applicationContext;
 	private ReportBuilder reportBuilder;
 	private Map<String,Object> parameters;
 	private HideRowColumnBuilder hideRowColumnBuilder;
@@ -60,12 +58,11 @@ public class Context {
 	private Map<Row,Map<Column,Cell>> blankCellsMap=new HashMap<Row,Map<Column,Cell>>();
 	private Map<Row,Integer> fillBlankRowsMap=new HashMap<Row,Integer>();
 	private Map<String,ChartData> chartDataMap=new HashMap<String,ChartData>();
-	public Context(ReportBuilder reportBuilder,Report report,Map<String,Dataset> datasetMap,ApplicationContext applicationContext,Map<String,Object> parameters,HideRowColumnBuilder hideRowColumnBuilder) {
+	public Context(ReportBuilder reportBuilder,Report report,Map<String,Dataset> datasetMap,Map<String,Object> parameters,HideRowColumnBuilder hideRowColumnBuilder) {
 		this.reportBuilder=reportBuilder;
 		this.report = report;
 		report.setContext(this);
 		this.datasetMap=datasetMap;
-		this.applicationContext=applicationContext;
 		this.parameters=parameters;
 		this.hideRowColumnBuilder=hideRowColumnBuilder;
 		Map<String,List<Cell>> cellsMap=report.getCellsMap();
@@ -81,8 +78,7 @@ public class Context {
 		this.rootCell.setName("ROOT");
 	}
 	
-	public Context(ApplicationContext applicationContext,Map<String,Object> parameters){
-		this.applicationContext=applicationContext;
+	public Context(Map<String,Object> parameters){
 		this.parameters=parameters;
 	}
 	
@@ -126,11 +122,7 @@ public class Context {
 	public ReportBuilder getReportBuilder() {
 		return reportBuilder;
 	}
-	
-	public ApplicationContext getApplicationContext() {
-		return applicationContext;
-	}
-	
+
 	public Map<String, Object> getParameters() {
 		return parameters;
 	}

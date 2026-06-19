@@ -27,8 +27,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.support.JdbcUtils;
-
 import com.bstek.ureport.definition.dataset.Field;
 import com.bstek.ureport.exception.ReportException;
 
@@ -65,13 +63,13 @@ public class ProcedureUtils {
 		} catch (SQLException e) {
 			throw new ReportException(e);
 		}finally{
-			JdbcUtils.closeResultSet(rs);
-			JdbcUtils.closeStatement(cs);
-			JdbcUtils.closeConnection(conn);
+			UReportJdbcUtils.closeQuietly(rs);
+			UReportJdbcUtils.closeQuietly(cs);
+			UReportJdbcUtils.closeQuietly(conn);
 		}
 	}
-	
-	
+
+
 	public static List<Map<String,Object>> procedureQuery(String sql,Map<String, Object> pmap,Connection conn){
 		StatementWrapper wrapper=buildProcedureCallableStatement(sql, pmap, conn);
 		CallableStatement cs=wrapper.getCallableStatement();
@@ -99,12 +97,12 @@ public class ProcedureUtils {
 		} catch (SQLException e) {
 			throw new ReportException(e);
 		}finally{
-			JdbcUtils.closeResultSet(rs);
-			JdbcUtils.closeStatement(cs);
-			JdbcUtils.closeConnection(conn);
+			UReportJdbcUtils.closeQuietly(rs);
+			UReportJdbcUtils.closeQuietly(cs);
+			UReportJdbcUtils.closeQuietly(conn);
 		}
 	}
-	
+
 	private static StatementWrapper buildProcedureCallableStatement(String sql,Map<String, Object> pmap,Connection conn){
 		try {
 			Map<String,Object> paramMap=new LinkedHashMap<String,Object>();

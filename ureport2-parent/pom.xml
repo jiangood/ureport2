@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 
 	<name>UReport2</name>
-	<description>基于Spring架构的高性能纯Java报表引擎</description>
+	<description>Framework-agnostic high-performance pure Java report engine</description>
 	<url>https://github.com/jiangood/ureport2</url>
 	<licenses>
 		<license>
@@ -29,7 +29,7 @@
 	</scm>
 
 	<properties>
-		<revision>3.0.0</revision>
+		<revision>4.0.0</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
@@ -43,6 +43,7 @@
 		<module>../ureport2-core</module>
 		<module>../ureport2-console</module>
 		<module>../ureport2-font</module>
+		<module>../ureport2-spring-boot-starter</module>
 	</modules>
 
 	<profiles>
@@ -149,39 +150,42 @@
 					<include>**/*.TTC</include>
 					<include>**/*.woff</include>
 					<include>**/*.woff2</include>
-					<include>**/*.md</include>
-					<include>**/*.template</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-					<include>**/*.xsd</include>
-					<include>**/*.schemas</include>
-					<include>**/*.handlers</include>
-					<include>**/*.properties</include>
-					<include>**/*.png</include>
-					<include>**/*.jpg</include>
-					<include>**/*.gif</include>
-					<include>**/*.css</include>
-					<include>**/*.js</include>
-					<include>**/*.map</include>
-					<include>**/*.html</include>
-					<include>**/*.jsp</include>
-					<include>**/*.txt</include>
-					<include>**/*.eot</include>
-					<include>**/*.svg</include>
-					<include>**/*.ttf</include>
-					<include>**/*.ttc</include>
-					<include>**/*.TTF</include>
-					<include>**/*.TTC</include>
-					<include>**/*.woff</include>
-					<include>**/*.woff2</include>
-					<include>**/*.md</include>
-					<include>**/*.template</include>
-				</includes>
-			</resource>
+				<include>**/*.md</include>
+				<include>**/*.template</include>
+				<include>**/*.imports</include>
+				<include>META-INF/services/**</include>
+				<include>META-INF/spring/**</include>
+			</includes>
+		</resource>
+		<resource>
+			<directory>src/main/java</directory>
+			<includes>
+				<include>**/*.xml</include>
+				<include>**/*.xsd</include>
+				<include>**/*.schemas</include>
+				<include>**/*.handlers</include>
+				<include>**/*.properties</include>
+				<include>**/*.png</include>
+				<include>**/*.jpg</include>
+				<include>**/*.gif</include>
+				<include>**/*.css</include>
+				<include>**/*.js</include>
+				<include>**/*.map</include>
+				<include>**/*.html</include>
+				<include>**/*.jsp</include>
+				<include>**/*.txt</include>
+				<include>**/*.eot</include>
+				<include>**/*.svg</include>
+				<include>**/*.ttf</include>
+				<include>**/*.ttc</include>
+				<include>**/*.TTF</include>
+				<include>**/*.TTC</include>
+				<include>**/*.woff</include>
+				<include>**/*.woff2</include>
+				<include>**/*.md</include>
+				<include>**/*.template</include>
+			</includes>
+		</resource>
 		</resources>
 		<plugins>
 			<plugin>

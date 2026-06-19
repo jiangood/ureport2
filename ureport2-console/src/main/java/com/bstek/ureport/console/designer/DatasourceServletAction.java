@@ -36,25 +36,16 @@ import java.util.regex.Pattern;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 import com.bstek.ureport.utils.UPropertyUtils;
 import com.bstek.ureport.utils.UStringUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.PreparedStatementCallback;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
-import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
-import org.springframework.jdbc.core.namedparam.ParsedSql;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
-import org.springframework.jdbc.support.JdbcUtils;
+
+import com.bstek.ureport.UReportEngine;
+import com.bstek.ureport.utils.UReportJdbcUtils;
+import com.bstek.ureport.definition.datasource.BeanDatasourceProvider;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
@@ -93,7 +84,13 @@ public class DatasourceServletAction extends RenderPageServletAction {
 	
 	public void loadMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String beanId=req.getParameter("beanId");
-		Object obj=applicationContext.getBean(beanId);
+		Object obj=null;
+		for(BeanDatasourceProvider p:UReportEngine.getInstance().getBeanDatasourceRegistry().all()){
+			if(p.supports(beanId)){obj=p.getBean(beanId);break;}
+		}
+		if(obj==null){
+			throw new ReportDesignException("Bean ["+beanId+"] not found via any BeanDatasourceProvider.");
+		}
 		Class<?> clazz=obj.getClass();
 		Method[] methods=clazz.getMethods();
 		List<String> result=new ArrayList<String>();
@@ -161,15 +158,17 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		}catch(Exception ex){
 			throw new ServletException(ex);
 		}finally{
-			JdbcUtils.closeResultSet(rs);
-			JdbcUtils.closeConnection(conn);
+			UReportJdbcUtils.closeQuietly(rs);
+			UReportJdbcUtils.closeQuietly(conn);
 		}
 	}
-	
+
 	public void buildFields(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String sql=req.getParameter("sql");
 		String parameters=req.getParameter("parameters");
 		Connection conn=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
 		final List<Field> fields=new ArrayList<Field>();
 		try{
 			conn=buildConnection(req);
@@ -179,43 +178,26 @@ public class DatasourceServletAction extends RenderPageServletAction {
 				List<Field> fieldsList = ProcedureUtils.procedureColumnsQuery(sql, map, conn);
 				fields.addAll(fieldsList);
 			}else{
-				DataSource dataSource=new SingleConnectionDataSource(conn,false);
-				NamedParameterJdbcTemplate jdbc=new NamedParameterJdbcTemplate(dataSource);
-				PreparedStatementCreator statementCreator=getPreparedStatementCreator(sql,new MapSqlParameterSource(map));
-				jdbc.getJdbcOperations().execute(statementCreator, new PreparedStatementCallback<Object>() {
-					@Override
-					public Object doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
-						ResultSet rs = null;
-						try {
-							rs = ps.executeQuery();
-							ResultSetMetaData metadata=rs.getMetaData();
-							int columnCount=metadata.getColumnCount();
-							for(int i=0;i<columnCount;i++){
-								String columnName=metadata.getColumnLabel(i+1);
-								fields.add(new Field(columnName));
-							}
-							return null;
-						}finally {
-							JdbcUtils.closeResultSet(rs);
-						}
-					}
-				});
+				com.bstek.ureport.utils.ParsedSql parsed = UReportJdbcUtils.parseNamedSql(sql);
+				Object[] values = UReportJdbcUtils.buildValueArray(parsed, map);
+				ps = conn.prepareStatement(parsed.getSql());
+				for(int k=0;k<values.length;k++){ps.setObject(k+1, values[k]);}
+				rs = ps.executeQuery();
+				ResultSetMetaData metadata=rs.getMetaData();
+				int columnCount=metadata.getColumnCount();
+				for(int i=0;i<columnCount;i++){
+					String columnName=metadata.getColumnLabel(i+1);
+					fields.add(new Field(columnName));
+				}
 			}
 			writeObjectToJson(resp, fields);
 		}catch(Exception ex){
 			throw new ReportDesignException(ex);
 		}finally{
-			JdbcUtils.closeConnection(conn);
+			UReportJdbcUtils.closeQuietly(rs);
+			UReportJdbcUtils.closeQuietly(ps);
+			UReportJdbcUtils.closeQuietly(conn);
 		}
-	}
-	
-	protected PreparedStatementCreator getPreparedStatementCreator(String sql, SqlParameterSource paramSource) {
-		ParsedSql parsedSql = NamedParameterUtils.parseSqlStatement(sql);
-		String sqlToUse = NamedParameterUtils.substituteNamedParameters(parsedSql, paramSource);
-		Object[] params = NamedParameterUtils.buildValueArray(parsedSql, paramSource, null);
-		List<SqlParameter> declaredParameters = NamedParameterUtils.buildSqlParameterList(parsedSql, paramSource);
-		PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(sqlToUse, declaredParameters);
-		return pscf.newPreparedStatementCreator(params);
 	}
 
 	public void previewData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -230,9 +212,7 @@ public class DatasourceServletAction extends RenderPageServletAction {
 			if(ProcedureUtils.isProcedure(sql)){
 				list=ProcedureUtils.procedureQuery(sql, map, conn);
 			}else{
-				DataSource dataSource=new SingleConnectionDataSource(conn,false);
-				NamedParameterJdbcTemplate jdbc=new NamedParameterJdbcTemplate(dataSource);
-				list=jdbc.queryForList(sql, map);				
+				list = UReportJdbcUtils.queryForList(conn, sql, map);
 			}
 			int size=list.size();
 			int currentTotal=size;
@@ -259,19 +239,13 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		}catch(Exception ex){
 			throw new ServletException(ex);
 		}finally{
-			if(conn!=null){
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			UReportJdbcUtils.closeQuietly(conn);
 		}
 	}
 	
 	private String parseSql(String sql,Map<String,Object> parameters){
 		sql=sql.trim();
-		Context context=new Context(applicationContext, parameters);
+		Context context=new Context(parameters);
 		if(sql.startsWith(ExpressionUtils.EXPR_PREFIX) && sql.endsWith(ExpressionUtils.EXPR_SUFFIX)){
 			sql=sql.substring(2, sql.length()-1);
 			Expression expr=ExpressionUtils.parseExpression(sql);

@@ -20,19 +20,16 @@ import java.util.Collection;
 import java.util.List;
 
 import org.dom4j.Element;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
+import com.bstek.ureport.UReportEngine;
 import com.bstek.ureport.definition.searchform.Component;
 
 /**
  * @author Jacky.gao
  * @since 2017年10月24日
  */
-public class FormParserUtils implements ApplicationContextAware{
-	@SuppressWarnings("rawtypes")
-	private static Collection<FormParser> parsers=null;
+public class FormParserUtils {
+	private static Collection<FormParser<?>> parsers=null;
 	public static List<Component> parse(Element element){
 		List<Component> list=new ArrayList<Component>();
 		for(Object obj:element.elements()){
@@ -55,8 +52,7 @@ public class FormParserUtils implements ApplicationContextAware{
 		}
 		return list;
 	}
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		FormParserUtils.parsers=applicationContext.getBeansOfType(FormParser.class).values();
+	public FormParserUtils() {
+		FormParserUtils.parsers = UReportEngine.getInstance().getFormParserRegistry().all();
 	}
 }

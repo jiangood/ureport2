@@ -23,10 +23,8 @@ import java.util.Map;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
+import com.bstek.ureport.UReportEngine;
 import com.bstek.ureport.build.assertor.Assertor;
 import com.bstek.ureport.build.assertor.EqualsAssertor;
 import com.bstek.ureport.build.assertor.EqualsGreatThenAssertor;
@@ -65,7 +63,7 @@ import com.bstek.ureport.expression.parse.builder.VariableExpressionBuilder;
  * @author Jacky.gao
  * @since 2016年12月24日
  */
-public class ExpressionUtils implements ApplicationContextAware{
+public class ExpressionUtils {
 	public static final String EXPR_PREFIX="${";
 	public static final String EXPR_SUFFIX="}";
 	private static ExpressionVisitor exprVisitor;
@@ -74,6 +72,14 @@ public class ExpressionUtils implements ApplicationContextAware{
 	private static List<ExpressionBuilder> expressionBuilders=new ArrayList<ExpressionBuilder>();
 	private static List<String> cellNameList=new ArrayList<String>();
 	private static String[] LETTERS={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+
+	public ExpressionUtils() {
+		Collection<Function> coll = UReportEngine.getInstance().getFunctionRegistry().all();
+		for (Function fun : coll) {
+			functions.put(fun.name(), fun);
+		}
+	}
+
 	static{
 		expressionBuilders.add(new StringExpressionBuilder());
 		expressionBuilders.add(new VariableExpressionBuilder());
@@ -148,13 +154,5 @@ public class ExpressionUtils implements ApplicationContextAware{
 	
 	public static ExpressionVisitor getExprVisitor() {
 		return exprVisitor;
-	}
-	
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		Collection<Function> coll=applicationContext.getBeansOfType(Function.class).values();
-		for(Function fun:coll){
-			functions.put(fun.name(), fun);
-		}
 	}
 }

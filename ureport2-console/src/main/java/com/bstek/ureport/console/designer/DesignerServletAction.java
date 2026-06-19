@@ -31,10 +31,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import com.bstek.ureport.utils.UIOUtils;
+import com.bstek.ureport.UReportEngine;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
 
 import com.bstek.ureport.cache.CacheUtils;
 import com.bstek.ureport.console.RenderPageServletAction;
@@ -196,13 +195,12 @@ public class DesignerServletAction extends RenderPageServletAction {
 	public void setReportParser(ReportParser reportParser) {
 		this.reportParser = reportParser;
 	}
-	
+
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)throws BeansException {
-		super.setApplicationContext(applicationContext);
-		Collection<ReportProvider> providers=applicationContext.getBeansOfType(ReportProvider.class).values();
-		for(ReportProvider provider:providers){
-			if(provider.disabled() || provider.getName()==null){
+	public void init() {
+		super.init();
+		for (ReportProvider provider : UReportEngine.getInstance().getReportProviderRegistry().all()) {
+			if (provider.disabled() || provider.getName() == null) {
 				continue;
 			}
 			reportProviders.add(provider);

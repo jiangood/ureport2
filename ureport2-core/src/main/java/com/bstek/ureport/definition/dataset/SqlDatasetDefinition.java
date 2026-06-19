@@ -22,9 +22,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.SingleConnectionDataSource;
-
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.Dataset;
@@ -34,6 +31,7 @@ import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.data.ObjectExpressionData;
 import com.bstek.ureport.utils.ProcedureUtils;
+import com.bstek.ureport.utils.UReportJdbcUtils;
 
 
 /**
@@ -49,7 +47,7 @@ public class SqlDatasetDefinition implements DatasetDefinition {
 	private Expression sqlExpression;
 	public Dataset buildDataset(Map<String,Object> parameterMap,Connection conn){
 		String sqlForUse=sql;
-		Context context=new Context(null,parameterMap);
+		Context context=new Context(parameterMap);
 		if(sqlExpression!=null){
 			sqlForUse=executeSqlExpr(sqlExpression, context);
 		}else{
@@ -69,9 +67,7 @@ public class SqlDatasetDefinition implements DatasetDefinition {
 			List<Map<String,Object>> result = ProcedureUtils.procedureQuery(sqlForUse,pmap,conn);
 			return new Dataset(name,result);
 		}
-		SingleConnectionDataSource datasource=new SingleConnectionDataSource(conn,false);
-		NamedParameterJdbcTemplate jdbcTemplate=new NamedParameterJdbcTemplate(datasource);
-		List<Map<String,Object>> list= jdbcTemplate.queryForList(sqlForUse, pmap);
+		List<Map<String,Object>> list = UReportJdbcUtils.queryForList(conn, sqlForUse, pmap);
 		return new Dataset(name,list);
 	}
 	

@@ -23,11 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
 import com.bstek.ureport.Utils;
+import com.bstek.ureport.UReportEngine;
 import com.bstek.ureport.build.cell.CellBuilder;
 import com.bstek.ureport.build.cell.NoneExpandBuilder;
 import com.bstek.ureport.build.cell.down.DownExpandBuilder;
@@ -58,9 +55,8 @@ import com.bstek.ureport.model.Row;
  * @author Jacky.gao
  * @since 2016年11月1日
  */
-public class ReportBuilder extends BasePagination implements ApplicationContextAware{
+public class ReportBuilder extends BasePagination {
 	public static final String BEAN_ID="ureport.reportBuilder";
-	private ApplicationContext applicationContext;
 	private Map<String,DatasourceProvider> datasourceProviderMap=new HashMap<String,DatasourceProvider>();
 	private Map<Expand,CellBuilder> cellBuildersMap=new HashMap<Expand,CellBuilder>();
 	private NoneExpandBuilder noneExpandBuilder=new NoneExpandBuilder();
@@ -69,11 +65,12 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		cellBuildersMap.put(Expand.Right,new RightExpandBuilder());
 		cellBuildersMap.put(Expand.Down,new DownExpandBuilder());
 		cellBuildersMap.put(Expand.None,noneExpandBuilder);
+		new Splash().doPrint();
 	}
 	public Report buildReport(ReportDefinition reportDefinition,Map<String,Object> parameters) {
 		Report report = reportDefinition.newReport();
-		Map<String,Dataset> datasetMap=buildDatasets(reportDefinition, parameters, applicationContext);
-		Context context = new Context(this,report,datasetMap,applicationContext,parameters,hideRowColumnBuilder);
+		Map<String,Dataset> datasetMap=buildDatasets(reportDefinition, parameters);
+		Context context = new Context(this,report,datasetMap,parameters,hideRowColumnBuilder);
 		long start=System.currentTimeMillis();
 		List<Cell> cells=new ArrayList<Cell>();
 		cells.add(report.getRootCell());
@@ -117,7 +114,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		}
 	}
 	
-	private Map<String,Dataset> buildDatasets(ReportDefinition reportDefinition,Map<String,Object> parameters,ApplicationContext applicationContext){
+	private Map<String,Dataset> buildDatasets(ReportDefinition reportDefinition,Map<String,Object> parameters){
 		Map<String,Dataset> datasetMap=new HashMap<String,Dataset>();
 		List<DatasourceDefinition> datasources=reportDefinition.getDatasources();
 		if(datasources==null){
@@ -147,7 +144,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 				}
 			}else if(dsDef instanceof SpringBeanDatasourceDefinition){
 				SpringBeanDatasourceDefinition ds=(SpringBeanDatasourceDefinition)dsDef;
-				List<Dataset> ls=ds.getDatasets(applicationContext, parameters);
+				List<Dataset> ls=ds.getDatasets(parameters);
 				if(ls!=null){
 					for(Dataset dataset:ls){
 						datasetMap.put(dataset.getName(), dataset);
@@ -455,14 +452,10 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 	public void setHideRowColumnBuilder(HideRowColumnBuilder hideRowColumnBuilder) {
 		this.hideRowColumnBuilder = hideRowColumnBuilder;
 	}
-	
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext=applicationContext;
-		Collection<DatasourceProvider> datasourceProviders=applicationContext.getBeansOfType(DatasourceProvider.class).values();
-		for(DatasourceProvider dp: datasourceProviders){
+
+	public void init() {
+		for (DatasourceProvider dp : UReportEngine.getInstance().getDatasourceProviderRegistry().all()) {
 			datasourceProviderMap.put(dp.getName(), dp);
 		}
-		new Splash().doPrint();
 	}
 }

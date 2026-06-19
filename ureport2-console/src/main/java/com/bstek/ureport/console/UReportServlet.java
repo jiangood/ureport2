@@ -17,9 +17,9 @@ package com.bstek.ureport.console;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -29,8 +29,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.bstek.ureport.utils.UStringUtils;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import com.bstek.ureport.UReportEngine;
 
 /**
  * @author Jacky.gao
@@ -45,19 +44,23 @@ public class UReportServlet extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		WebApplicationContext applicationContext = getWebApplicationContext(config);
-		Collection<ServletAction> handlers = applicationContext.getBeansOfType(ServletAction.class).values();
-		for (ServletAction handler : handlers) {
+		Properties props = new Properties();
+		String fileStoreDir = config.getInitParameter("ureport.fileStoreDir");
+		String debug = config.getInitParameter("ureport.debug");
+		String disableFileProvider = config.getInitParameter("ureport.disableFileProvider");
+		String disableCache = config.getInitParameter("ureport.disableHttpSessionReportCache");
+		if (fileStoreDir != null) { props.setProperty("ureport.fileStoreDir", fileStoreDir); }
+		if (debug != null) { props.setProperty("ureport.debug", debug); }
+		if (disableFileProvider != null) { props.setProperty("ureport.disableFileProvider", disableFileProvider); }
+		if (disableCache != null) { props.setProperty("ureport.disableHttpSessionReportCache", disableCache); }
+		UReportEngine.initialize(props, config.getServletContext());
+		for (ServletAction handler : ServletActionRegistry.getInstance().all()) {
 			String url = handler.url();
 			if (actionMap.containsKey(url)) {
 				throw new RuntimeException("Handler [" + url + "] already exist.");
 			}
 			actionMap.put(url, handler);
 		}
-	}
-	
-	protected WebApplicationContext getWebApplicationContext(ServletConfig config){
-		return WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
 	}
 
 	@Override
