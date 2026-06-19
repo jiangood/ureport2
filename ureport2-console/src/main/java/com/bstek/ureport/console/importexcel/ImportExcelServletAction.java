@@ -15,22 +15,18 @@
  ******************************************************************************/
 package com.bstek.ureport.console.importexcel;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 import com.bstek.ureport.console.RenderPageServletAction;
 import com.bstek.ureport.console.cache.TempObjectCache;
@@ -48,18 +44,16 @@ public class ImportExcelServletAction extends RenderPageServletAction {
 	}
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String tempDir=System.getProperty("java.io.tmpdir");
-		FileItemFactory factory=new DiskFileItemFactory(1000240,new File(tempDir));
-		ServletFileUpload upload=new ServletFileUpload(factory);
 		ReportDefinition report=null;
 		String errorInfo=null;
 		try {
-			List<FileItem> items=upload.parseRequest(req);
-			for(FileItem item:items){
-				String fieldName=item.getFieldName();
-				String name=item.getName().toLowerCase();
-				if(fieldName.equals("_excel_file") && (name.endsWith(".xls") || name.endsWith(".xlsx"))){
-					InputStream inputStream=item.getInputStream();
+			Collection<Part> parts=req.getParts();
+			for(Part part:parts){
+				String name=part.getSubmittedFileName();
+				if(name==null) continue;
+				name=name.toLowerCase();
+				if(name.endsWith(".xls") || name.endsWith(".xlsx")){
+					InputStream inputStream=part.getInputStream();
 					for(ExcelParser parser:excelParsers){
 						if(parser.support(name)){
 							report=parser.parse(inputStream);

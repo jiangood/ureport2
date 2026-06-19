@@ -37,7 +37,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
-import org.apache.poi.xssf.usermodel.XSSFShape;
+import org.apache.poi.util.Units;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.paging.Page;
@@ -171,13 +171,13 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 			    				int leftMargin=0,topMargin=0;
 			    				int wholeWidth=getWholeWidth(columns, i, cellInfo.getColSpan());
 			    				int wholeHeight=getWholeHeight(rows, rowIndex, cellInfo.getRowSpan());
-			    				HorizontalAlignment align=style.getAlignmentEnum();
+			    				HorizontalAlignment align=style.getAlignment();
 			    				if(align.equals(HorizontalAlignment.CENTER)){
 			    					leftMargin=(wholeWidth-width)/2;
 			    				}else if(align.equals(HorizontalAlignment.RIGHT)){
 			    					leftMargin=wholeWidth-width;
 			    				}
-			    				VerticalAlignment valign=style.getVerticalAlignmentEnum();
+			    				VerticalAlignment valign=style.getVerticalAlignment();
 			    				if(valign.equals(VerticalAlignment.CENTER)){
 			    					topMargin=(wholeHeight-height)/2;
 			    				}else if(valign.equals(VerticalAlignment.BOTTOM)){
@@ -193,10 +193,10 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 			        				anchor.setCol2(i+colSpan);
 			        				anchor.setRow1(rowNumber);
 			        				anchor.setRow2(rowNumber+rowSpan);
-			        				anchor.setDx1(leftMargin * XSSFShape.EMU_PER_PIXEL);
-			        				anchor.setDx2(width * XSSFShape.EMU_PER_PIXEL);
-			        				anchor.setDy1(topMargin * XSSFShape.EMU_PER_PIXEL);
-			        				anchor.setDy2(height * XSSFShape.EMU_PER_PIXEL);
+			        				anchor.setDx1(leftMargin * Units.EMU_PER_PIXEL);
+			        				anchor.setDx2(width * Units.EMU_PER_PIXEL);
+			        				anchor.setDy1(topMargin * Units.EMU_PER_PIXEL);
+			        				anchor.setDy2(height * Units.EMU_PER_PIXEL);
 			        				drawing.createPicture(anchor, pictureIndex);
 			        			}finally{
 			        				IOUtils.closeQuietly(inputStream);
@@ -216,13 +216,13 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 				    				int leftMargin=0,topMargin=0;
 				    				int wholeWidth=getWholeWidth(columns, i, cellInfo.getColSpan());
 				    				int wholeHeight=getWholeHeight(rows, rowIndex, cellInfo.getRowSpan());
-				    				HorizontalAlignment align=style.getAlignmentEnum();
+				    				HorizontalAlignment align=style.getAlignment();
 				    				if(align.equals(HorizontalAlignment.CENTER)){
 				    					leftMargin=(wholeWidth-width)/2;
 				    				}else if(align.equals(HorizontalAlignment.RIGHT)){
 				    					leftMargin=wholeWidth-width;
 				    				}
-				    				VerticalAlignment valign=style.getVerticalAlignmentEnum();
+				    				VerticalAlignment valign=style.getVerticalAlignment();
 				    				if(valign.equals(VerticalAlignment.CENTER)){
 				    					topMargin=(wholeHeight-height)/2;
 				    				}else if(valign.equals(VerticalAlignment.BOTTOM)){
@@ -237,10 +237,10 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 			        					anchor.setCol2(i+colSpan);
 			        					anchor.setRow1(rowNumber);
 			        					anchor.setRow2(rowNumber+rowSpan);
-			        					anchor.setDx1(leftMargin * XSSFShape.EMU_PER_PIXEL);
-			        					anchor.setDx2(width * XSSFShape.EMU_PER_PIXEL);
-			        					anchor.setDy1(topMargin * XSSFShape.EMU_PER_PIXEL);
-			        					anchor.setDy2(height * XSSFShape.EMU_PER_PIXEL);
+			        					anchor.setDx1(leftMargin * Units.EMU_PER_PIXEL);
+			        					anchor.setDx2(width * Units.EMU_PER_PIXEL);
+			        					anchor.setDy1(topMargin * Units.EMU_PER_PIXEL);
+			        					anchor.setDy2(height * Units.EMU_PER_PIXEL);
 			        					drawing.createPicture(anchor, pictureIndex);
 			        				}finally{
 			        					IOUtils.closeQuietly(inputStream);

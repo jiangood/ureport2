@@ -20,13 +20,13 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
-import org.springframework.util.Base64Utils;
 
 import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.image.ChartImageProcessor;
@@ -48,7 +48,7 @@ public class ImageUtils {
 	}
 	
 	public static InputStream base64DataToInputStream(String base64Data){
-		byte[] bytes=Base64Utils.decodeFromString(base64Data);
+		byte[] bytes=Base64.getDecoder().decode(base64Data);
 		ByteArrayInputStream inputStream=new ByteArrayInputStream(bytes);
 		return inputStream;
 	}
@@ -72,7 +72,7 @@ public class ImageUtils {
 		        inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 			}
 			byte[] bytes=IOUtils.toByteArray(inputStream);
-			return Base64Utils.encodeToString(bytes);
+			return Base64.getEncoder().encodeToString(bytes);
 		}catch(Exception ex){
 			throw new ReportComputeException(ex);
 		}finally{
