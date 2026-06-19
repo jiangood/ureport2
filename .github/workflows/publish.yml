@@ -1,6 +1,7 @@
 name: Publish Maven
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*'
