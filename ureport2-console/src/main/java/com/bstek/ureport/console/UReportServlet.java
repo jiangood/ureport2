@@ -21,11 +21,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
@@ -35,6 +36,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * @author Jacky.gao
  * @since 2017年1月25日
  */
+@MultipartConfig
 public class UReportServlet extends HttpServlet {
 	private static final long serialVersionUID = 533049461276487971L;
 	public static final String URL = "/ureport";
