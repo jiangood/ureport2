@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://github.com/jiangood/ureport2"><img alt="Java" src="https://img.shields.io/badge/Java-8+-blue.svg"></a>
+  <a href="https://github.com/jiangood/ureport2"><img alt="License" src="https://img.shields.io/github/license/jiangood/ureport2"></a>
+  <a href="https://search.maven.org/artifact/io.github.jiangood/ureport2-parent"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.jiangood/ureport2-parent"></a>
+</p>
+
 # Overview
 
 UReport2 is a high-performance pure Java report engine based on Spring architecture, where complex Chinese-style statements and reports can be prepared by iteraing over cells.
@@ -16,27 +22,16 @@ UReport2 is the first Chinese-style report engine based on Apache-2.0 License.
 
 UReport2 is a pure Java report engine, so it supports all current popular types of J2EE projects. Here we will mainly introduce how Maven-based J2EE projects incorporate UReport2.
 
-### Maven-based UReport2 project
+### Maven
 
-Firstly, we need to create a standard Maven project \(create a project with Eclipse or other tools, while no more details are introduced here\), then open the file pom.xml of Maven, and add the dependence information of UReport2, as shown below:
+Add the dependency to your `pom.xml`:
 
 ```
 <dependency>
-    <groupId>com.bstek.ureport</groupId>
+    <groupId>io.github.jiangood</groupId>
     <artifactId>ureport2-console</artifactId>
-    <version>[version]</version>
+    <version>3.0.0</version>
 </dependency>
-```
-
-Within the above dependence information, \[version\] indicates the specific version No. of the ureport2-console package. We can search the keyword  “ureport2-c onsole” at [http://search.maven.org/](http://search.maven.org/) to check the specific version No. of the package. The latest source code can be downloaded from [https://github.com/youseries/ureport](https://github.com/youseries/ureport).
-
-It shall be noted that only the latest release version can be found at [http://search.maven.org/](http://search.maven.org/). If you need the latest snapshot, you can search at [https://oss.so](https://oss.so) natype.org/. Pursuant to regulations on sonatype, only the official version can be published on [http://search.maven.org/](http://search.maven.org/), i.e. the central repository of mave, and the snapshot version only exists in [https://oss.sonatype.org/](https://oss.sonatype.org/). If we want to apply the latest snapshot at [https://oss.sonatype.org/](https://oss.sonatype.org/), we need to add repository information in pom.xml, to tell Maven to download the package of snapshot version there. The repository information is listed below:
-
-```
-<repository>
-    <id>sonatype</id>
-    <url>https://oss.sonatype.org/content/groups/public/</url>
-</repository>
 ```
 
 Then, we need to configure the servlet that will be used by UReport2. Open the web.xml file in the project and add the following servlet configuration:
