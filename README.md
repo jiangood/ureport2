@@ -4,23 +4,31 @@
   <a href="https://search.maven.org/artifact/io.github.jiangood/ureport2-parent"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.jiangood/ureport2-parent"></a>
 </p>
 
-# Overview
+# 简介
 
-UReport2 is a high-performance pure Java report engine based on Spring architecture, where complex Chinese-style statements and reports can be prepared by iteraing over cells.
+UReport2 是一款高性能的架构在 Spring 之上纯 Java 报表引擎，通过迭代单元格可以实现任意复杂的中国式报表。
 
-UReport2 provides the brand new web-based report designer that runs in mainstream browsers including Chrome, Firefox and Edge etc. \(other than IE\). You can complete the design and preparation of complex statements and reports with UReport2 by simply opening the browser.
+在 UReport2 中，提供了全新的基于网页的报表设计器，可以在 Chrome、Firefox、Edge 等各种主流浏览器运行（IE 浏览器除外），打开浏览器即可完成各种复杂报表的设计制作。
 
-UReport2 is the first Chinese-style report engine based on Apache-2.0 License.
+UReport2 是第一款基于 Apache-2.0 协议开源的中式报表引擎。
 
-[中文 README](README-zh_CN.md)
+## 文档与视频教程
 
-# Installation and Configuration
+- BSDN WIKI：[http://wiki.bsdn.org/display/UR/ureport2+Home](http://wiki.bsdn.org/display/UR/ureport2+Home)
+- w3cschool：[https://www.w3cschool.cn/ureport](https://www.w3cschool.cn/ureport)
 
-UReport2 is a pure Java report engine, so it supports all current popular types of J2EE projects. Here we will mainly introduce how Maven-based J2EE projects incorporate UReport2.
+# QQ 群
+
+- 一群：423339793（已满）
+- 二群：636590564
+
+# 安装与配置
+
+UReport2 是纯 Java 报表引擎，支持当前所有主流的 J2EE 项目。下面介绍基于 Maven 的 J2EE 项目如何集成 UReport2。
 
 ### Maven
 
-Add the dependency to your `pom.xml`:
+在 `pom.xml` 中添加依赖：
 
 ```
 <dependency>
@@ -30,7 +38,7 @@ Add the dependency to your `pom.xml`:
 </dependency>
 ```
 
-Then, we need to configure the servlet that will be used by UReport2. Open the web.xml file in the project and add the following servlet configuration:
+然后需要在 `web.xml` 中配置 UReport2 使用的 Servlet：
 
 ```
 <servlet>
@@ -43,9 +51,9 @@ Then, we need to configure the servlet that will be used by UReport2. Open the w
 </servlet-mapping>
 ```
 
-In the servlet configuratin, the url-pattern shall keep the fixed value of “/ureport/\*” from any change, otherwise the system will fail.
+注意：`url-pattern` 必须保持为 `/ureport/*`，否则系统无法正常运行。
 
-As UReport2 is built based on the framework of spring, the last step of configuration shall be loading the spring configuration file of UReport2 in the project. Several ways are available to load the file, including opening web.xml, adding the listener provided by spring and directly loading the spring configuration file provided by UReport2, as shown below:
+由于 UReport2 基于 Spring 框架构建，最后需要加载 UReport2 的 Spring 配置文件。可以在 `web.xml` 中添加 Spring 提供的监听器，直接加载 UReport2 的 Spring 配置文件：
 
 ```
 <listener>
@@ -57,25 +65,27 @@ As UReport2 is built based on the framework of spring, the last step of configur
 </context-param>
 ```
 
-If spring is not used in your project, you can apply the above configuration and directly load the spring configuration file provided by UReport2. If spring is used in your project or in other modules of the project, you can import the spring configuration file provided by UReport2 to the existing spring configuration file. The configuration is shown below:
+如果项目中已经使用了 Spring，则可以在已有的 Spring 配置文件中导入 UReport2 的配置文件：
 
 ```
-<import  resource="classpath:ureport-console-context.xml"  />
+<import resource="classpath:ureport-console-context.xml" />
 ```
 
-By now, we have added UReport2 in a standard Maven project. Run the project, and you can see the interface of UReport2 report designer by visiting URL：[http://localhost:8080/\[contextPath\]/ureport/designer](http://localhost:8080/[contextPath]/ureport/designer) in a browser.![](docs/images/dd.png)![](docs/images/designer.png)Links:
+完成以上配置后，启动项目，在浏览器中访问 `http://localhost:8080/[contextPath]/ureport/designer` 即可看到 UReport2 的报表设计器界面。
 
-* [Reports Storage and Configuration of the Data Source](docs/STORAGE-DATASOURCE.md)
-* [The introduction of the report calculation model](docs/REPORT-MODEL.md)
-* [Expression](docs/EXPRESSION.md)
-* Function
-* Condition attribute
-* Parameter
-* Combinnation with business
-* Row type
-* Adding blank line and paging
-* Load Pictures
-* Chromatography printing
+![](docs/images/dd.png)
+![](docs/images/designer.png)
 
+# 相关文档
 
-
+- [报表存储与数据源配置](docs/STORAGE-DATASOURCE.md)
+- [报表计算模型介绍](docs/REPORT-MODEL.md)
+- [表达式](docs/EXPRESSION.md)
+- 函数
+- 条件属性
+- 参数
+- 与业务结合
+- 行类型
+- 添加空白行与分页
+- 加载图片
+- 套打
