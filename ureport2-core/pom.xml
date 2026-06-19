@@ -11,7 +11,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.5</version>
+			<version>3.18.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>4.3.11.RELEASE</version>
+			<version>6.1.21</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -46,12 +46,12 @@
 		<dependency>
 		    <groupId>org.apache.poi</groupId>
 		    <artifactId>poi-ooxml</artifactId>
-		    <version>3.16</version>
+		    <version>5.4.0</version>
 		</dependency>		
 		<dependency>
 		    <groupId>org.apache.poi</groupId>
 		    <artifactId>poi-scratchpad</artifactId>
-		    <version>3.16</version>
+		    <version>5.2.1</version>
 		</dependency>		
 		<dependency>
 		    <groupId>org.apache.poi</groupId>
