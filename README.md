@@ -14,10 +14,6 @@ UReport2 is the first Chinese-style report engine based on Apache-2.0 License.
 
 [中文 README](README-zh_CN.md)
 
-# Teaching video
-
-[http://pan.baidu.com/s/1boWTxF5](http://pan.baidu.com/s/1boWTxF5)，password：98hj
-
 # Installation and Configuration
 
 UReport2 is a pure Java report engine, so it supports all current popular types of J2EE projects. Here we will mainly introduce how Maven-based J2EE projects incorporate UReport2.
