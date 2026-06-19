@@ -30,7 +30,7 @@ import java.util.Map;
 
 import javax.swing.JLabel;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.Range;
 import com.bstek.ureport.Utils;
@@ -265,10 +265,10 @@ public class Cell implements ReportCell {
 		if(customCellStyle!=null){
 			customFormat=customCellStyle.getFormat();
 		}
-		if(StringUtils.isNotBlank(customFormat)){
+		if(UStringUtils.isNotBlank(customFormat)){
 			format=customFormat;
 		}
-		if(StringUtils.isBlank(format) || data==null || StringUtils.isBlank(data.toString())){
+		if(UStringUtils.isBlank(format) || data==null || UStringUtils.isBlank(data.toString())){
 			return;
 		}
 		if(data instanceof Date){
@@ -341,13 +341,13 @@ public class Cell implements ReportCell {
 					context.doHideProcessColumn(column);
 				}
 			}
-			if(StringUtils.isNotBlank(item.getNewValue())){
+			if(UStringUtils.isNotBlank(item.getNewValue())){
 				this.data=item.getNewValue();
 				this.formatData=item.getNewValue();
 			}
-			if(StringUtils.isNotBlank(item.getLinkUrl())){
+			if(UStringUtils.isNotBlank(item.getLinkUrl())){
 				linkUrl=item.getLinkUrl();
-				if(StringUtils.isNotBlank(item.getLinkTargetWindow())){
+				if(UStringUtils.isNotBlank(item.getLinkTargetWindow())){
 					linkTargetWindow=item.getLinkTargetWindow();					
 				}
 				if(item.getLinkParameters()!=null && item.getLinkParameters().size()>0){
@@ -418,7 +418,7 @@ public class Cell implements ReportCell {
 					
 				}
 				String forecolor=style.getForecolor();
-				if(StringUtils.isNotBlank(forecolor)){
+				if(UStringUtils.isNotBlank(forecolor)){
 					Scope scope=style.getForecolorScope();
 					if(scope.equals(Scope.cell)){
 						if(this.customCellStyle==null){
@@ -438,7 +438,7 @@ public class Cell implements ReportCell {
 					}
 				}
 				String bgcolor=style.getBgcolor();
-				if(StringUtils.isNotBlank(bgcolor)){
+				if(UStringUtils.isNotBlank(bgcolor)){
 					Scope scope=style.getBgcolorScope();
 					if(scope.equals(Scope.cell)){
 						if(this.customCellStyle==null){
@@ -478,7 +478,7 @@ public class Cell implements ReportCell {
 					}
 				}
 				String fontFamily=style.getFontFamily();
-				if(StringUtils.isNotBlank(fontFamily)){
+				if(UStringUtils.isNotBlank(fontFamily)){
 					Scope scope=style.getFontFamilyScope();
 					if(scope.equals(Scope.cell)){
 						if(this.customCellStyle==null){
@@ -498,7 +498,7 @@ public class Cell implements ReportCell {
 					}
 				}
 				String format=style.getFormat();
-				if(StringUtils.isNotBlank(format)){
+				if(UStringUtils.isNotBlank(format)){
 					if(this.customCellStyle==null){
 						this.customCellStyle=new CellStyle();
 					}
@@ -574,7 +574,7 @@ public class Cell implements ReportCell {
 			return;
 		}
 		String dataText=targetData.toString();
-		if(StringUtils.isBlank(dataText) || dataText.length()<2){
+		if(UStringUtils.isBlank(dataText) || dataText.length()<2){
 			return;
 		}
 		int totalColumnWidth=column.getWidth();

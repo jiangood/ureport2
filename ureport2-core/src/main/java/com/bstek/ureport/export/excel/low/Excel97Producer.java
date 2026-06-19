@@ -26,7 +26,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.IOUtils;
+import com.bstek.ureport.utils.UIOUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -172,11 +172,11 @@ public class Excel97Producer {
 				    				BufferedImage bufferedImage=ImageIO.read(inputStream);
 				    				int width=bufferedImage.getWidth();
 				    				int height=bufferedImage.getHeight();
-				    				IOUtils.closeQuietly(inputStream);
+				    				UIOUtils.closeQuietly(inputStream);
 				    				inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
 				        			try{
 				        				XSSFClientAnchor anchor=(XSSFClientAnchor)creationHelper.createClientAnchor();
-				        				byte[] bytes=IOUtils.toByteArray(inputStream);
+				        				byte[] bytes=UIOUtils.toByteArray(inputStream);
 				        				int pictureFormat=buildImageFormat(img);
 				        				int pictureIndex=wb.addPicture(bytes, pictureFormat);
 				        				anchor.setCol1(i);
@@ -189,7 +189,7 @@ public class Excel97Producer {
 				        				anchor.setDy2(height * Units.EMU_PER_PIXEL);
 				        				drawing.createPicture(anchor, pictureIndex);
 				        			}finally{
-				        				IOUtils.closeQuietly(inputStream);
+				        				UIOUtils.closeQuietly(inputStream);
 				        			}
 				        		}else if(obj instanceof ChartData){
 				        			ChartData chartData=(ChartData)obj;
@@ -200,11 +200,11 @@ public class Excel97Producer {
 				        				BufferedImage bufferedImage=ImageIO.read(inputStream);
 				        				int width=bufferedImage.getWidth();
 				        				int height=bufferedImage.getHeight();
-				        				IOUtils.closeQuietly(inputStream);
+				        				UIOUtils.closeQuietly(inputStream);
 				        				inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
 				        				try{
 				        					XSSFClientAnchor anchor=(XSSFClientAnchor)creationHelper.createClientAnchor();
-				        					byte[] bytes=IOUtils.toByteArray(inputStream);
+				        					byte[] bytes=UIOUtils.toByteArray(inputStream);
 				        					int pictureFormat=buildImageFormat(img);
 				        					int pictureIndex=wb.addPicture(bytes, pictureFormat);
 				        					anchor.setCol1(i);
@@ -217,7 +217,7 @@ public class Excel97Producer {
 				        					anchor.setDy2(height * Units.EMU_PER_PIXEL);
 				        					drawing.createPicture(anchor, pictureIndex);
 				        				}finally{
-				        					IOUtils.closeQuietly(inputStream);
+				        					UIOUtils.closeQuietly(inputStream);
 				        				}
 				        			}
 				        		}else if(obj instanceof Date){
@@ -324,11 +324,11 @@ public class Excel97Producer {
 			    				BufferedImage bufferedImage=ImageIO.read(inputStream);
 			    				int width=bufferedImage.getWidth();
 			    				int height=bufferedImage.getHeight();
-			    				IOUtils.closeQuietly(inputStream);
+			    				UIOUtils.closeQuietly(inputStream);
 			    				inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
 			        			try{
 			        				XSSFClientAnchor anchor=(XSSFClientAnchor)creationHelper.createClientAnchor();
-			        				byte[] bytes=IOUtils.toByteArray(inputStream);
+			        				byte[] bytes=UIOUtils.toByteArray(inputStream);
 			        				int pictureFormat=buildImageFormat(img);
 			        				int pictureIndex=wb.addPicture(bytes, pictureFormat);
 			        				anchor.setCol1(i);
@@ -341,7 +341,7 @@ public class Excel97Producer {
 			        				anchor.setDy2(height * Units.EMU_PER_PIXEL);
 			        				drawing.createPicture(anchor, pictureIndex);
 			        			}finally{
-			        				IOUtils.closeQuietly(inputStream);
+			        				UIOUtils.closeQuietly(inputStream);
 			        			}
 			        		}else if(obj instanceof ChartData){
 			        			ChartData chartData=(ChartData)obj;
@@ -352,11 +352,11 @@ public class Excel97Producer {
 			        				BufferedImage bufferedImage=ImageIO.read(inputStream);
 			        				int width=bufferedImage.getWidth();
 			        				int height=bufferedImage.getHeight();
-			        				IOUtils.closeQuietly(inputStream);
+			        				UIOUtils.closeQuietly(inputStream);
 			        				inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
 			        				try{
 			        					XSSFClientAnchor anchor=(XSSFClientAnchor)creationHelper.createClientAnchor();
-			        					byte[] bytes=IOUtils.toByteArray(inputStream);
+			        					byte[] bytes=UIOUtils.toByteArray(inputStream);
 			        					int pictureFormat=buildImageFormat(img);
 			        					int pictureIndex=wb.addPicture(bytes, pictureFormat);
 			        					anchor.setCol1(i);
@@ -369,7 +369,7 @@ public class Excel97Producer {
 			        					anchor.setDy2(height * Units.EMU_PER_PIXEL);
 			        					drawing.createPicture(anchor, pictureIndex);
 			        				}finally{
-			        					IOUtils.closeQuietly(inputStream);
+			        					UIOUtils.closeQuietly(inputStream);
 			        				}
 			        			}
 			        		}else if(obj instanceof Date){

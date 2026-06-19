@@ -23,7 +23,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.build.ReportBuilder;
 import com.bstek.ureport.console.BaseServletAction;
@@ -65,11 +65,11 @@ public class ExportExcel97ServletAction extends BaseServletAction {
 	
 	public void buildExcel(HttpServletRequest req, HttpServletResponse resp,boolean withPage,boolean withSheet) throws IOException {
 		String file=req.getParameter("_u");
-		if(StringUtils.isBlank(file)){
+		if(UStringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
 		String fileName=req.getParameter("_n");
-		if(StringUtils.isNotBlank(fileName)){
+		if(UStringUtils.isNotBlank(fileName)){
 			fileName=decode(fileName);
 		}else{
 			fileName="ureport.xls";

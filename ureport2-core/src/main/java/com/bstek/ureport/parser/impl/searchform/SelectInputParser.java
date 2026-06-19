@@ -18,7 +18,7 @@ package com.bstek.ureport.parser.impl.searchform;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.definition.searchform.LabelPosition;
@@ -38,7 +38,7 @@ public class SelectInputParser implements FormParser<SelectInputComponent> {
 		select.setType(element.attributeValue("type"));
 		select.setLabelPosition(LabelPosition.valueOf(element.attributeValue("label-position")));
 		String useDataset=element.attributeValue("use-dataset");
-		if(StringUtils.isNotBlank(useDataset)){
+		if(UStringUtils.isNotBlank(useDataset)){
 			select.setUseDataset(Boolean.valueOf(useDataset));
 			select.setDataset(element.attributeValue("dataset"));
 			select.setLabelField(element.attributeValue("label-field"));

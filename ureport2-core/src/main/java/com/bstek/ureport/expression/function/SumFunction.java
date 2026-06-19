@@ -18,7 +18,7 @@ package com.bstek.ureport.expression.function;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.BindData;
@@ -47,7 +47,7 @@ public class SumFunction implements Function {
 				ObjectListExpressionData listExpr=(ObjectListExpressionData)exprData;
 				List<?> list=listExpr.getData();
 				for(Object obj:list){
-					if(obj==null || StringUtils.isBlank(obj.toString())){
+					if(obj==null || UStringUtils.isBlank(obj.toString())){
 						continue;
 					}
 					singleData=obj;
@@ -57,7 +57,7 @@ public class SumFunction implements Function {
 			}else if(exprData instanceof ObjectExpressionData){
 				Object obj=exprData.getData();
 				singleData=obj;
-				if(obj!=null && StringUtils.isNotBlank(obj.toString())){
+				if(obj!=null && UStringUtils.isNotBlank(obj.toString())){
 					BigDecimal bigData=Utils.toBigDecimal(obj);
 					total=total.add(bigData);
 				}
@@ -66,7 +66,7 @@ public class SumFunction implements Function {
 				List<BindData> bindDataList=data.getData();
 				for(BindData bindData:bindDataList){
 					Object obj=bindData.getValue();
-					if(obj==null || StringUtils.isBlank(obj.toString())){
+					if(obj==null || UStringUtils.isBlank(obj.toString())){
 						continue;
 					}
 					singleData=obj;

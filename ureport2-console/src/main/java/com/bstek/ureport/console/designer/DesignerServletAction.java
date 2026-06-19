@@ -30,7 +30,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.apache.commons.io.IOUtils;
+import com.bstek.ureport.utils.UIOUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.springframework.beans.BeansException;
@@ -119,10 +119,10 @@ public class DesignerServletAction extends RenderPageServletAction {
 	public void savePreviewData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String content=req.getParameter("content");
 		content=decodeContent(content);
-		InputStream inputStream=IOUtils.toInputStream(content,"utf-8");
+		InputStream inputStream=UIOUtils.toInputStream(content,"utf-8");
 		ReportDefinition reportDef=reportParser.parse(inputStream,"p");
 		reportRender.rebuildReportDefinition(reportDef);
-		IOUtils.closeQuietly(inputStream);
+		UIOUtils.closeQuietly(inputStream);
 		TempObjectCache.putObject(PREVIEW_KEY, reportDef);
 	}
 	
@@ -178,11 +178,11 @@ public class DesignerServletAction extends RenderPageServletAction {
 			throw new ReportDesignException("File ["+file+"] not found available report provider.");
 		}
 		targetReportProvider.saveReport(file, content);
-		InputStream inputStream=IOUtils.toInputStream(content,"utf-8");
+		InputStream inputStream=UIOUtils.toInputStream(content,"utf-8");
 		ReportDefinition reportDef=reportParser.parse(inputStream, file);
 		reportRender.rebuildReportDefinition(reportDef);
 		CacheUtils.cacheReportDefinition(file, reportDef);
-		IOUtils.closeQuietly(inputStream);
+		UIOUtils.closeQuietly(inputStream);
 	}
 	
 	public void loadReportProviders(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

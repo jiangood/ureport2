@@ -24,8 +24,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UIOUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import java.util.Base64;
 
 import com.bstek.ureport.build.BindData;
@@ -60,7 +60,7 @@ public class ZxingValueCompute implements ValueCompute {
 		ZxingValue value=(ZxingValue)cell.getValue();
 		String format=value.getFormat();
 		BarcodeFormat barcodeForamt=BarcodeFormat.QR_CODE;
-		if(StringUtils.isNotBlank(format)){
+		if(UStringUtils.isNotBlank(format)){
 			barcodeForamt=BarcodeFormat.valueOf(format);			
 		}
 		int w=value.getWidth();
@@ -138,7 +138,7 @@ public class ZxingValueCompute implements ValueCompute {
             ImageIO.write(image, "png", outputStream);
             byte[] bytes=outputStream.toByteArray();
             String base64Data=Base64.getEncoder().encodeToString(bytes);
-            IOUtils.closeQuietly(outputStream);
+            UIOUtils.closeQuietly(outputStream);
             return new Image(base64Data,w,h);
         }catch(Exception ex){
         	throw new ReportComputeException(ex);

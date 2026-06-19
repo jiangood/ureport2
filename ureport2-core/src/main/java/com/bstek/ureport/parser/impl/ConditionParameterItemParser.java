@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.definition.ConditionCellStyle;
@@ -52,11 +52,11 @@ public class ConditionParameterItemParser implements Parser<ConditionPropertyIte
 	public ConditionPropertyItem parse(Element element) {
 		ConditionPropertyItem item=new ConditionPropertyItem();
 		String rowHeight=element.attributeValue("row-height");
-		if(StringUtils.isNotBlank(rowHeight)){
+		if(UStringUtils.isNotBlank(rowHeight)){
 			item.setRowHeight(Integer.valueOf(rowHeight));
 		}
 		String colWidth=element.attributeValue("col-width");
-		if(StringUtils.isNotBlank(colWidth)){
+		if(UStringUtils.isNotBlank(colWidth)){
 			item.setColWidth(Integer.valueOf(colWidth));
 		}
 		item.setName(element.attributeValue("name"));
@@ -132,7 +132,7 @@ public class ConditionParameterItemParser implements Parser<ConditionPropertyIte
 				break;
 			}
 			String join=ele.attributeValue("join");
-			if(StringUtils.isNotBlank(join)){
+			if(UStringUtils.isNotBlank(join)){
 				condition.setJoin(Join.valueOf(join));
 			}
 			return condition;
@@ -159,7 +159,7 @@ public class ConditionParameterItemParser implements Parser<ConditionPropertyIte
 				}
 			}
 			String join=ele.attributeValue("join");
-			if(StringUtils.isNotBlank(join)){
+			if(UStringUtils.isNotBlank(join)){
 				exprCondition.setJoin(Join.valueOf(join));
 			}
 			return exprCondition;

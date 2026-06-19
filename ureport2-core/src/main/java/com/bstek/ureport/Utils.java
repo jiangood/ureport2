@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import com.bstek.ureport.utils.UPropertyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -165,7 +165,7 @@ public class Utils implements ApplicationContextAware{
 				Map<?,?> map=(Map<?,?>)obj;
 				return map.get(property);
 			}
-			return PropertyUtils.getProperty(obj, property);
+			return UPropertyUtils.getProperty(obj, property);
 		}catch(Exception ex){
 			throw new ReportComputeException(ex);
 		}

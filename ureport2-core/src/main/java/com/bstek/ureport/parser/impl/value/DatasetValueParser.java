@@ -18,7 +18,7 @@ package com.bstek.ureport.parser.impl.value;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.definition.Order;
@@ -46,11 +46,11 @@ public class DatasetValueParser extends ValueParser {
 		value.setDatasetName(element.attributeValue("dataset-name"));
 		value.setProperty(element.attributeValue("property"));
 		String order=element.attributeValue("order");
-		if(StringUtils.isNotBlank(order)){
+		if(UStringUtils.isNotBlank(order)){
 			value.setOrder(Order.valueOf(order));
 		}
 		String mappingType=element.attributeValue("mapping-type");
-		if(StringUtils.isNotBlank(mappingType)){
+		if(UStringUtils.isNotBlank(mappingType)){
 			value.setMappingType(MappingType.valueOf(mappingType));
 		}
 		value.setMappingDataset(element.attributeValue("mapping-dataset"));
@@ -143,7 +143,7 @@ public class DatasetValueParser extends ValueParser {
 			break;
 		}
 		String join=ele.attributeValue("join");
-		if(StringUtils.isNotBlank(join)){
+		if(UStringUtils.isNotBlank(join)){
 			condition.setJoin(Join.valueOf(join));
 		}
 		return condition;

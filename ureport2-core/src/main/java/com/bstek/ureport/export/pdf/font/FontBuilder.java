@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UIOUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -101,7 +101,7 @@ public class FontBuilder implements ApplicationContextAware{
 		} catch (Exception e) {
 			throw new ReportException(e);
 		}finally{
-			IOUtils.closeQuietly(inputStream);
+			UIOUtils.closeQuietly(inputStream);
 		}
 	}
 	
@@ -116,7 +116,7 @@ public class FontBuilder implements ApplicationContextAware{
 		for(FontRegister fontReg:fontRegisters){
 			String fontName=fontReg.getFontName();
 			String fontPath=fontReg.getFontPath();
-			if(StringUtils.isEmpty(fontPath) || StringUtils.isEmpty(fontName)){
+			if(UStringUtils.isEmpty(fontPath) || UStringUtils.isEmpty(fontName)){
 				continue;
 			}
 			try {
@@ -148,7 +148,7 @@ public class FontBuilder implements ApplicationContextAware{
 		try{
 			fontPathMap.put(fontFamily, fontPath);
 			inputStream=applicationContext.getResource(fontPath).getInputStream();
-			byte[] bytes = IOUtils.toByteArray(inputStream);
+			byte[] bytes = UIOUtils.toByteArray(inputStream);
 			BaseFont baseFont = BaseFont.createFont(fontName, BaseFont.IDENTITY_H,BaseFont.EMBEDDED,true,bytes,null);
 			baseFont.setSubset(true);
 			return baseFont;			

@@ -28,7 +28,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -87,7 +87,7 @@ public class UReportServlet extends HttpServlet {
 			Throwable e=buildRootException(ex);
 			resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			String errorMsg = e.getMessage();
-			if(StringUtils.isBlank(errorMsg)){
+			if(UStringUtils.isBlank(errorMsg)){
 				errorMsg=e.getClass().getName();
 			}
 			pw.write(errorMsg);

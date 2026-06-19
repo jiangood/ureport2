@@ -17,7 +17,7 @@ package com.bstek.ureport.build.assertor;
 
 import java.math.BigDecimal;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.Utils;
 
@@ -31,7 +31,7 @@ public class EqualsGreatThenAssertor extends AbstractAssertor{
 		if(left==null || right==null){
 			return false;
 		}
-		if(StringUtils.isBlank(left.toString()) || StringUtils.isBlank(right.toString())){
+		if(UStringUtils.isBlank(left.toString()) || UStringUtils.isBlank(right.toString())){
 			return false;
 		}
 		BigDecimal leftObj=Utils.toBigDecimal(left);

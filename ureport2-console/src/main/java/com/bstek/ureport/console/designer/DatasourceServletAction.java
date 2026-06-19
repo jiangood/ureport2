@@ -38,8 +38,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UPropertyUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -124,7 +124,7 @@ public class DatasourceServletAction extends RenderPageServletAction {
 		List<Field> result=new ArrayList<Field>();
 		try{
 			Class<?> targetClass=Class.forName(clazz);
-			PropertyDescriptor[] propertyDescriptors=PropertyUtils.getPropertyDescriptors(targetClass);
+			PropertyDescriptor[] propertyDescriptors=UPropertyUtils.getPropertyDescriptors(targetClass);
 			for(PropertyDescriptor pd:propertyDescriptors){
 				String name=pd.getName();
 				if("class".equals(name)){
@@ -337,7 +337,7 @@ public class DatasourceServletAction extends RenderPageServletAction {
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> buildParameters(String parameters) throws IOException, JsonParseException, JsonMappingException {
 		Map<String,Object> map=new HashMap<String,Object>();
-		if(StringUtils.isBlank(parameters)){
+		if(UStringUtils.isBlank(parameters)){
 			return map;
 		}
 		ObjectMapper mapper=new ObjectMapper();

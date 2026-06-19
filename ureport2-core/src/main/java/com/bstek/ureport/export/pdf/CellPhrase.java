@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.export.pdf;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.definition.CellStyle;
 import com.bstek.ureport.export.pdf.font.FontBuilder;
@@ -45,13 +45,13 @@ public class CellPhrase extends Phrase {
 		CellStyle rowStyle=cell.getRow().getCustomCellStyle();
 		CellStyle colStyle=cell.getColumn().getCustomCellStyle();
 		String fontName=style.getFontFamily();
-		if(customStyle!=null && StringUtils.isNotBlank(customStyle.getFontFamily())){
+		if(customStyle!=null && UStringUtils.isNotBlank(customStyle.getFontFamily())){
 			fontName=customStyle.getFontFamily();
 		}
-		if(rowStyle!=null && StringUtils.isNotBlank(rowStyle.getFontFamily())){
+		if(rowStyle!=null && UStringUtils.isNotBlank(rowStyle.getFontFamily())){
 			fontName=rowStyle.getFontFamily();
 		}
-		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getFontFamily())){
+		if(colStyle!=null && UStringUtils.isNotBlank(colStyle.getFontFamily())){
 			fontName=colStyle.getFontFamily();
 		}
 		int fontSize=style.getFontSize();
@@ -101,21 +101,21 @@ public class CellPhrase extends Phrase {
 		if(bold==null)bold=false;
 		if(italic==null)italic=false;
 		if(underline==null)underline=false;
-		if(StringUtils.isBlank(fontName)){
+		if(UStringUtils.isBlank(fontName)){
 			fontName="宋体";
 		}
 		Font font=FontBuilder.getFont(fontName, fontSize,bold,italic,underline);
 		String fontColor=style.getForecolor();
-		if(customStyle!=null && StringUtils.isNotBlank(customStyle.getForecolor())){
+		if(customStyle!=null && UStringUtils.isNotBlank(customStyle.getForecolor())){
 			fontColor=customStyle.getForecolor();
 		}
-		if(rowStyle!=null && StringUtils.isNotBlank(rowStyle.getForecolor())){
+		if(rowStyle!=null && UStringUtils.isNotBlank(rowStyle.getForecolor())){
 			fontColor=rowStyle.getForecolor();
 		}
-		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getForecolor())){
+		if(colStyle!=null && UStringUtils.isNotBlank(colStyle.getForecolor())){
 			fontColor=colStyle.getForecolor();
 		}
-		if(StringUtils.isNotEmpty(fontColor)){
+		if(UStringUtils.isNotEmpty(fontColor)){
 			String[] color=fontColor.split(",");
 			font.setColor(Integer.valueOf(color[0]), Integer.valueOf(color[1]), Integer.valueOf(color[2]));			
 		}

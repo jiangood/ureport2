@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.expression.model.condition;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.bstek.ureport.Utils;
@@ -36,7 +36,7 @@ public class PropertyExpressionCondition extends BaseCondition {
 	private Expression rightExpression;
 	@Override
 	Object computeLeft(Cell cell,Cell currentCell,Object obj,Context context) {
-		if(StringUtils.isNotBlank(leftProperty)){
+		if(UStringUtils.isNotBlank(leftProperty)){
 			return Utils.getProperty(obj, leftProperty);			
 		}else{
 			return cell.getData();

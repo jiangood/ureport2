@@ -18,7 +18,7 @@ package com.bstek.ureport.expression.function.page;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
@@ -44,7 +44,7 @@ public class PageSumFunction extends PageFunction {
 				ObjectListExpressionData listExpr=(ObjectListExpressionData)exprData;
 				List<?> list=listExpr.getData();
 				for(Object obj:list){
-					if(obj==null || StringUtils.isBlank(obj.toString())){
+					if(obj==null || UStringUtils.isBlank(obj.toString())){
 						continue;
 					}
 					BigDecimal bigData=Utils.toBigDecimal(obj);
@@ -52,7 +52,7 @@ public class PageSumFunction extends PageFunction {
 				}
 			}else if(exprData instanceof ObjectExpressionData){
 				Object obj=exprData.getData();
-				if(obj!=null && StringUtils.isNotBlank(obj.toString())){
+				if(obj!=null && UStringUtils.isNotBlank(obj.toString())){
 					BigDecimal bigData=Utils.toBigDecimal(obj);
 					total=total.add(bigData);
 				}

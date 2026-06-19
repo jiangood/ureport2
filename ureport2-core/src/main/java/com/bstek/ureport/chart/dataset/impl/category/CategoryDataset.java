@@ -24,7 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
@@ -214,7 +214,7 @@ public abstract class CategoryDataset extends BaseDataset {
 			}else{
 				sb.append("[");
 			}
-			if(StringUtils.isNotBlank(format)){
+			if(UStringUtils.isNotBlank(format)){
 				if(obj instanceof Date){
 					Date date=(Date)obj;
 					SimpleDateFormat sd=new SimpleDateFormat(format);

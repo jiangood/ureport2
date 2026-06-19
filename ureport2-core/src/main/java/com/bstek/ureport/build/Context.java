@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.springframework.context.ApplicationContext;
 
 import com.bstek.ureport.Utils;
@@ -91,7 +91,7 @@ public class Context {
 			Map<String,String> mapping=expr.getMapping();
 			return mapping;
 		}else if(expr.getMappingType().equals(MappingType.dataset)){
-			if(StringUtils.isNotBlank(expr.getMappingDataset()) && StringUtils.isNotBlank(expr.getMappingKeyProperty()) && StringUtils.isNotBlank(expr.getMappingValueProperty())){
+			if(UStringUtils.isNotBlank(expr.getMappingDataset()) && UStringUtils.isNotBlank(expr.getMappingKeyProperty()) && UStringUtils.isNotBlank(expr.getMappingValueProperty())){
 				Map<String,String> mapping=new HashMap<String,String>();
 				List<?> list=getDatasetData(expr.getMappingDataset());
 				for(Object obj:list){

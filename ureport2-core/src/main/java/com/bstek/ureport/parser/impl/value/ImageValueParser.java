@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.parser.impl.value;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.definition.value.Source;
@@ -34,11 +34,11 @@ public class ImageValueParser extends ValueParser {
 	public Value parse(Element element) {
 		ImageValue value=new ImageValue();
 		String width=element.attributeValue("width");
-		if(StringUtils.isNotBlank(width)){
+		if(UStringUtils.isNotBlank(width)){
 			value.setWidth(Integer.valueOf(width));
 		}
 		String height=element.attributeValue("height");
-		if(StringUtils.isNotBlank(height)){
+		if(UStringUtils.isNotBlank(height)){
 			value.setHeight(Integer.valueOf(height));
 		}
 		Source source=Source.valueOf(element.attributeValue("source"));

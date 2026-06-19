@@ -18,7 +18,7 @@ package com.bstek.ureport.build.compute;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
@@ -66,7 +66,7 @@ public class ImageValueCompute implements ValueCompute{
 					}else{
 						path=o.toString();
 					}
-					if(StringUtils.isBlank(path)){
+					if(UStringUtils.isBlank(path)){
 						continue;
 					}
 					String base64Data=ImageUtils.getImageBase64Data(ImageType.image, path,width,height);
@@ -79,7 +79,7 @@ public class ImageValueCompute implements ValueCompute{
 				if(valueData!=null){
 					path=valueData.toString();
 				}
-				if(StringUtils.isNotBlank(path)){
+				if(UStringUtils.isNotBlank(path)){
 					String base64Data=ImageUtils.getImageBase64Data(ImageType.image, path,width,height);
 					list.add(new BindData(new Image(base64Data,path,-1,-1)));
 				}
@@ -91,7 +91,7 @@ public class ImageValueCompute implements ValueCompute{
 				String base64Data=ImageUtils.getImageBase64Data(ImageType.image, text,width,height);
 				list.add(new BindData(new Image(base64Data,text,-1,-1)));			
 			}else{
-				if(obj!=null && StringUtils.isNotBlank(obj.toString())){
+				if(obj!=null && UStringUtils.isNotBlank(obj.toString())){
 					String base64Data=ImageUtils.getImageBase64Data(ImageType.image, obj.toString(),width,height);
 					list.add(new BindData(new Image(base64Data,obj.toString(),-1,-1)));					
 				}

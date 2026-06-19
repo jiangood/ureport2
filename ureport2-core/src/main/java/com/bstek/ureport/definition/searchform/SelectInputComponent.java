@@ -17,7 +17,7 @@ package com.bstek.ureport.definition.searchform;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Dataset;
@@ -39,7 +39,7 @@ public class SelectInputComponent extends InputComponent {
 		Object pvalue=context.getParameter(name)==null ? "" : context.getParameter(name);
 		StringBuilder sb=new StringBuilder();
 		sb.append("<select style=\"padding:3px;height:28px\" id='"+context.buildComponentId(this)+"' name='"+name+"' class='form-control'>");
-		if(useDataset && StringUtils.isNotBlank(dataset)){
+		if(useDataset && UStringUtils.isNotBlank(dataset)){
 			Dataset ds=context.getDataset(dataset);
 			if(ds==null){
 				throw new DatasetUndefinitionException(dataset);

@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.parser.impl;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.definition.HeaderFooterDefinition;
@@ -32,31 +32,31 @@ public class HeaderFooterParser implements Parser<HeaderFooterDefinition> {
 	public HeaderFooterDefinition parse(Element element) {
 		HeaderFooterDefinition hf=new HeaderFooterDefinition();
 		String margin=element.attributeValue("margin");
-		if(StringUtils.isNotBlank(margin)){
+		if(UStringUtils.isNotBlank(margin)){
 			hf.setMargin(Integer.valueOf(margin));
 		}
 		String bold=element.attributeValue("bold");
-		if(StringUtils.isNotBlank(bold)){
+		if(UStringUtils.isNotBlank(bold)){
 			hf.setBold(Boolean.valueOf(bold));
 		}
 		String italic=element.attributeValue("italic");
-		if(StringUtils.isNotBlank(italic)){
+		if(UStringUtils.isNotBlank(italic)){
 			hf.setItalic(Boolean.valueOf(italic));
 		}
 		String underline=element.attributeValue("underline");
-		if(StringUtils.isNotBlank(underline)){
+		if(UStringUtils.isNotBlank(underline)){
 			hf.setUnderline(Boolean.valueOf(underline));
 		}
 		String fontFamily=element.attributeValue("font-family");
-		if(StringUtils.isNotBlank(fontFamily)){
+		if(UStringUtils.isNotBlank(fontFamily)){
 			hf.setFontFamily(fontFamily);			
 		}
 		String forecolor=element.attributeValue("forecolor");
-		if(StringUtils.isNotBlank(forecolor)){
+		if(UStringUtils.isNotBlank(forecolor)){
 			hf.setForecolor(forecolor);			
 		}
 		String fontSize=element.attributeValue("font-size");
-		if(StringUtils.isNotBlank(fontSize)){
+		if(UStringUtils.isNotBlank(fontSize)){
 			hf.setFontSize(Integer.valueOf(fontSize));			
 		}
 		for(Object obj:element.elements()){
@@ -67,19 +67,19 @@ public class HeaderFooterParser implements Parser<HeaderFooterDefinition> {
 			String name=ele.getName();
 			if(name.equals("left")){
 				hf.setLeft(ele.getText());
-				if(StringUtils.isNotBlank(hf.getLeft())){
+				if(UStringUtils.isNotBlank(hf.getLeft())){
 					Expression expr=ExpressionUtils.parseExpression(hf.getLeft());
 					hf.setLeftExpression(expr);
 				}
 			}else if(name.equals("center")){
 				hf.setCenter(ele.getText());
-				if(StringUtils.isNotBlank(hf.getCenter())){
+				if(UStringUtils.isNotBlank(hf.getCenter())){
 					Expression expr=ExpressionUtils.parseExpression(hf.getCenter());
 					hf.setCenterExpression(expr);
 				}
 			}else if(name.equals("right")){
 				hf.setRight(ele.getText());
-				if(StringUtils.isNotBlank(hf.getRight())){
+				if(UStringUtils.isNotBlank(hf.getRight())){
 					Expression expr=ExpressionUtils.parseExpression(hf.getRight());
 					hf.setRightExpression(expr);
 				}

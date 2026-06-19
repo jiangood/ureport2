@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.definition.CellDefinition;
@@ -69,29 +69,29 @@ public class CellParser implements Parser<CellDefinition>{
 		cell.setLeftParentCellName(element.attributeValue("left-cell"));
 		cell.setTopParentCellName(element.attributeValue("top-cell"));
 		String rowSpan=element.attributeValue("row-span");
-		if(StringUtils.isNotBlank(rowSpan)){
+		if(UStringUtils.isNotBlank(rowSpan)){
 			cell.setRowSpan(Integer.valueOf(rowSpan));
 		}
 		String colSpan=element.attributeValue("col-span");
-		if(StringUtils.isNotBlank(colSpan)){
+		if(UStringUtils.isNotBlank(colSpan)){
 			cell.setColSpan(Integer.valueOf(colSpan));
 		}
 		String expand=element.attributeValue("expand");
-		if(StringUtils.isNotBlank(expand)){
+		if(UStringUtils.isNotBlank(expand)){
 			cell.setExpand(Expand.valueOf(expand));			
 		}
 		String fillBlankRows=element.attributeValue("fill-blank-rows");
-		if(StringUtils.isNotBlank(fillBlankRows)){
+		if(UStringUtils.isNotBlank(fillBlankRows)){
 			cell.setFillBlankRows(Boolean.valueOf(fillBlankRows));
 			String multiple=element.attributeValue("multiple");
-			if(StringUtils.isNotBlank(multiple)){
+			if(UStringUtils.isNotBlank(multiple)){
 				cell.setMultiple(Integer.valueOf(multiple));
 			}
 		}
 		cell.setLinkTargetWindow(element.attributeValue("link-target-window"));
 		String linkUrl=element.attributeValue("link-url");
 		cell.setLinkUrl(linkUrl);
-		if(StringUtils.isNotBlank(linkUrl)){
+		if(UStringUtils.isNotBlank(linkUrl)){
 			if(linkUrl.startsWith(ExpressionUtils.EXPR_PREFIX) && linkUrl.endsWith(ExpressionUtils.EXPR_SUFFIX)){
 				String expr=linkUrl.substring(2,linkUrl.length()-1);
 				Expression urlExpression=ExpressionUtils.parseExpression(expr);

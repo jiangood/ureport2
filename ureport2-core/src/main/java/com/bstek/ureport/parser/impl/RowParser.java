@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.parser.impl;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.definition.Band;
@@ -32,11 +32,11 @@ public class RowParser implements Parser<RowDefinition> {
 		RowDefinition row=new RowDefinition();
 		row.setRowNumber(Integer.valueOf(element.attributeValue("row-number")));
 		String height=element.attributeValue("height");
-		if(StringUtils.isNotBlank(height)){
+		if(UStringUtils.isNotBlank(height)){
 			row.setHeight(Integer.valueOf(height));
 		}
 		String band=element.attributeValue("band");
-		if(StringUtils.isNotBlank(band)){
+		if(UStringUtils.isNotBlank(band)){
 			row.setBand(Band.valueOf(band));
 		}
 		return row;

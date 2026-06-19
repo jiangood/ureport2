@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.expression.model.expr.cell;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
@@ -39,7 +39,7 @@ public class CellObjectExpression extends BaseExpression {
 		while(!context.isCellPocessed(cell.getName())){
 			context.getReportBuilder().buildCell(context, null);
 		}
-		if(StringUtils.isNotBlank(property)){
+		if(UStringUtils.isNotBlank(property)){
 			Object obj=Utils.getProperty(cell, property);
 			return new ObjectExpressionData(obj);
 		}

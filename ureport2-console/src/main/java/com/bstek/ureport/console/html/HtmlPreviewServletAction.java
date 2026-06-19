@@ -28,7 +28,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -125,7 +125,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 					tools.setShow(false);
 				}else{
 					String toolsInfo=req.getParameter("_t");
-					if(StringUtils.isNotBlank(toolsInfo)){
+					if(UStringUtils.isNotBlank(toolsInfo)){
 						tools=new Tools(false);
 						if(toolsInfo.equals("0")){
 							tools.setShow(false);
@@ -155,7 +155,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 	
 	private String buildTitle(HttpServletRequest req){
 		String title=req.getParameter("_title");
-		if(StringUtils.isBlank(title)){
+		if(UStringUtils.isBlank(title)){
 			title=req.getParameter("_u");
 			title=decode(title);
 			int point=title.lastIndexOf(".ureport.xml");
@@ -192,7 +192,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 	public void loadPrintPages(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String file=req.getParameter("_u");
 		file=decode(file);
-		if(StringUtils.isBlank(file)){
+		if(UStringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
 		Map<String, Object> parameters = buildParameters(req);
@@ -246,7 +246,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 	public void loadPagePaper(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String file=req.getParameter("_u");
 		file=decode(file);
-		if(StringUtils.isBlank(file)){
+		if(UStringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
 		ReportDefinition report=null;
@@ -268,7 +268,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		String file=req.getParameter("_u");
 		file=decode(file);
 		String pageIndex=req.getParameter("_i");
-		if(StringUtils.isBlank(file)){
+		if(UStringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
 		if(file.equals(PREVIEW_KEY)){
@@ -283,7 +283,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			}
 			htmlReport=new HtmlReport();
 			String html=null;
-			if(StringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0")){
+			if(UStringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0")){
 				Context context=report.getContext();
 				int index=Integer.valueOf(pageIndex);
 				SinglePageData pageData=PageBuilder.buildSinglePageData(index, report);
@@ -310,7 +310,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
 			htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
 		}else{
-			if(StringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0")){
+			if(UStringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0")){
 				int index=Integer.valueOf(pageIndex);
 				htmlReport=exportManager.exportHtml(file,req.getContextPath(),parameters,index);								
 			}else{

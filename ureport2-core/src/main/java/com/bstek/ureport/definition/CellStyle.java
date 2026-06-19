@@ -18,7 +18,7 @@ package com.bstek.ureport.definition;
 import java.awt.Font;
 import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.bstek.ureport.export.pdf.font.FontBuilder;
@@ -193,7 +193,7 @@ public class CellStyle implements Serializable{
 				fontStyle=Font.ITALIC;							
 			}
 			String fontName=fontFamily;
-			if(StringUtils.isBlank(fontName)){
+			if(UStringUtils.isBlank(fontName)){
 				fontName="宋体";
 			}
 			this.font=FontBuilder.getAwtFont(fontName, fontStyle, new Float(fontSize));

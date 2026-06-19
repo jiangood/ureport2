@@ -18,7 +18,7 @@ package com.bstek.ureport.expression.function;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.BindData;
@@ -65,7 +65,7 @@ public class GetFunction implements Function {
 				obj = list.get(list.size()-1);
 			}
 		}
-		if(StringUtils.isNotBlank(propertyName)){
+		if(UStringUtils.isNotBlank(propertyName)){
 			obj=Utils.getProperty(obj, propertyName);
 		}
 		return obj;

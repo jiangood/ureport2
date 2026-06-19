@@ -25,7 +25,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 
 /**
@@ -104,7 +104,7 @@ public abstract class BaseServletAction implements ServletAction {
 	}
 	
 	protected String buildDownloadFileName(String reportFileName,String fileName,String extName){
-		if(StringUtils.isNotBlank(fileName)){
+		if(UStringUtils.isNotBlank(fileName)){
 			fileName=decode(fileName);
 			if(!fileName.toLowerCase().endsWith(extName)){
 				fileName=fileName+extName;

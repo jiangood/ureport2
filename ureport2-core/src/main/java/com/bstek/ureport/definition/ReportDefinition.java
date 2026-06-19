@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.bstek.ureport.build.Dataset;
@@ -172,17 +172,17 @@ public class ReportDefinition implements Serializable{
 				sb.append("line-height:"+lineHeight+";");
 			}
 			String bgcolor=cellStyle.getBgcolor();
-			if(StringUtils.isNotBlank(bgcolor)){
+			if(UStringUtils.isNotBlank(bgcolor)){
 				sb.append("background-color:rgb("+bgcolor+");");				
 			}
 			String fontFamilty=cellStyle.getFontFamily();
-			if(StringUtils.isNotBlank(fontFamilty)){
+			if(UStringUtils.isNotBlank(fontFamilty)){
 				sb.append("font-family:"+fontFamilty+";");				
 			}
 			int fontSize=cellStyle.getFontSize();
 			sb.append("font-size:"+fontSize+"pt;");
 			String foreColor=cellStyle.getForecolor();
-			if(StringUtils.isNotBlank(foreColor)){
+			if(UStringUtils.isNotBlank(foreColor)){
 				sb.append("color:rgb("+foreColor+");");				
 			}
 			Boolean bold=cellStyle.getBold(),italic=cellStyle.getItalic(),underline=cellStyle.getUnderline();

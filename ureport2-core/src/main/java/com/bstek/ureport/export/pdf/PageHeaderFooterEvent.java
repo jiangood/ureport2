@@ -17,7 +17,7 @@ package com.bstek.ureport.export.pdf;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.build.paging.HeaderFooter;
 import com.bstek.ureport.build.paging.Page;
@@ -83,20 +83,20 @@ public class PageHeaderFooterEvent extends PdfPageEventHelper {
 		String right=hf.getRight();
 		try {
 			PdfPTable table=null;
-			if(StringUtils.isNotEmpty(left)){
-				if(StringUtils.isNotEmpty(center) && StringUtils.isNotEmpty(right)){
+			if(UStringUtils.isNotEmpty(left)){
+				if(UStringUtils.isNotEmpty(center) && UStringUtils.isNotEmpty(right)){
 					table = new PdfPTable(3);
 					table.setWidths(new int[]{1, 1, 1});
 					table.addCell(buildPdfPCell(hf,left,1));
 					table.addCell(buildPdfPCell(hf,center,2));
 					table.addCell(buildPdfPCell(hf,right,3));
-				}else if(StringUtils.isNotEmpty(center)){
+				}else if(UStringUtils.isNotEmpty(center)){
 					table = new PdfPTable(3);
 					table.setWidths(new int[]{1, 1, 1});
 					table.addCell(buildPdfPCell(hf,left,1));
 					table.addCell(buildPdfPCell(hf,center,2));
 					table.addCell(buildPdfPCell(hf,"",3));
-				}else if(StringUtils.isNotEmpty(right)){
+				}else if(UStringUtils.isNotEmpty(right)){
 					table = new PdfPTable(3);
 					table.setWidths(new int[]{1, 1, 1});
 					table.addCell(buildPdfPCell(hf,left,1));
@@ -107,8 +107,8 @@ public class PageHeaderFooterEvent extends PdfPageEventHelper {
 					table.setWidths(new int[]{1});
 					table.addCell(buildPdfPCell(hf,left,1));
 				}
-			}else if(StringUtils.isNotEmpty(center)){
-				if(StringUtils.isNotEmpty(right)){
+			}else if(UStringUtils.isNotEmpty(center)){
+				if(UStringUtils.isNotEmpty(right)){
 					table = new PdfPTable(3);
 					table.setWidths(new int[]{1, 1, 1});
 					table.addCell(buildPdfPCell(hf,"",1));
@@ -119,7 +119,7 @@ public class PageHeaderFooterEvent extends PdfPageEventHelper {
 					table.setWidths(new int[]{1});
 					table.addCell(buildPdfPCell(hf,center,2));
 				}
-			}else if(StringUtils.isNotEmpty(right)){
+			}else if(UStringUtils.isNotEmpty(right)){
 				table = new PdfPTable(1);
 				table.setWidths(new int[]{1});
 				table.addCell(buildPdfPCell(hf,right,3));
@@ -146,7 +146,7 @@ public class PageHeaderFooterEvent extends PdfPageEventHelper {
 		cell.setBorder(Rectangle.NO_BORDER);
 		Font font=FontBuilder.getFont(phf.getFontFamily(), phf.getFontSize(), phf.isBold(), phf.isItalic(),phf.isUnderline());
 		String fontColor=phf.getForecolor();
-		if(StringUtils.isNotEmpty(fontColor)){
+		if(UStringUtils.isNotEmpty(fontColor)){
 			String[] color=fontColor.split(",");
 			font.setColor(Integer.valueOf(color[0]), Integer.valueOf(color[1]), Integer.valueOf(color[2]));			
 		}

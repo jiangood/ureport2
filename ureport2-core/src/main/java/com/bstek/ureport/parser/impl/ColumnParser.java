@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.parser.impl;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.definition.ColumnDefinition;
@@ -31,11 +31,11 @@ public class ColumnParser implements Parser<ColumnDefinition> {
 		ColumnDefinition col=new ColumnDefinition();
 		col.setColumnNumber(Integer.valueOf(element.attributeValue("col-number")));
 		String hide=element.attributeValue("hide");
-		if(StringUtils.isNotBlank(hide)){
+		if(UStringUtils.isNotBlank(hide)){
 			col.setHide(Boolean.valueOf(hide));			
 		}
 		String width=element.attributeValue("width");
-		if(StringUtils.isNotBlank(width)){
+		if(UStringUtils.isNotBlank(width)){
 			col.setWidth(Integer.valueOf(width));
 		}
 		return col;

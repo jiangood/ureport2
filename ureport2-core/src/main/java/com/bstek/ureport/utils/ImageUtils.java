@@ -26,7 +26,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.IOUtils;
+import com.bstek.ureport.utils.UIOUtils;
 
 import com.bstek.ureport.exception.ReportComputeException;
 import com.bstek.ureport.image.ChartImageProcessor;
@@ -71,12 +71,12 @@ public class ImageUtils {
 		        ImageIO.write(outputImage, "png", outputStream);
 		        inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 			}
-			byte[] bytes=IOUtils.toByteArray(inputStream);
+			byte[] bytes=UIOUtils.toByteArray(inputStream);
 			return Base64.getEncoder().encodeToString(bytes);
 		}catch(Exception ex){
 			throw new ReportComputeException(ex);
 		}finally{
-			IOUtils.closeQuietly(inputStream);
+			UIOUtils.closeQuietly(inputStream);
 		}
 	}
 }

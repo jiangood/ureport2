@@ -23,7 +23,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.bstek.ureport.build.ReportBuilder;
@@ -66,7 +66,7 @@ public class ExportPdfServletAction extends BaseServletAction{
 	public void buildPdf(HttpServletRequest req, HttpServletResponse resp,boolean forPrint) throws IOException {
 		String file=req.getParameter("_u");
 		file=decode(file);
-		if(StringUtils.isBlank(file)){
+		if(UStringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
 		OutputStream outputStream=null;
@@ -104,7 +104,7 @@ public class ExportPdfServletAction extends BaseServletAction{
 	
 	public void newPaging(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String file=req.getParameter("_u");
-		if(StringUtils.isBlank(file)){
+		if(UStringUtils.isBlank(file)){
 			throw new ReportComputeException("Report file can not be null.");
 		}
 		Report report=null;

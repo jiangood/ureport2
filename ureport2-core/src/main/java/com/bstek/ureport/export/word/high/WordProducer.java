@@ -26,8 +26,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UIOUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.BreakType;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
@@ -314,7 +314,7 @@ public class WordProducer implements Producer{
 			}
 			String path=img.getPath();
 			String imageType="png";
-			if(StringUtils.isNotBlank(path)){
+			if(UStringUtils.isNotBlank(path)){
 				path=path.toLowerCase();
 				if(path.endsWith(".jpg") || path.endsWith(".jpeg")){
 					imageType="jpeg";
@@ -323,14 +323,14 @@ public class WordProducer implements Producer{
 				}
 			}
 			String base64Data=img.getBase64Data();
-			if(StringUtils.isNotBlank(base64Data)){
+			if(UStringUtils.isNotBlank(base64Data)){
 				InputStream inputStream=null;
 				try{
 					inputStream=ImageUtils.base64DataToInputStream(base64Data);
 					BufferedImage bufferedImage=ImageIO.read(inputStream);
 					int width=bufferedImage.getWidth();
 					int height=bufferedImage.getHeight();
-					IOUtils.closeQuietly(inputStream);
+					UIOUtils.closeQuietly(inputStream);
 					inputStream=ImageUtils.base64DataToInputStream(base64Data);
 					width=UnitUtils.pixelToPoint(width);
 					height=UnitUtils.pixelToPoint(height);
@@ -344,7 +344,7 @@ public class WordProducer implements Producer{
 				}catch(Exception ex){
 					throw new ReportComputeException(ex);
 				}finally{
-					IOUtils.closeQuietly(inputStream);
+					UIOUtils.closeQuietly(inputStream);
 				}
 			}
 		}else if(value instanceof Date){
@@ -353,16 +353,16 @@ public class WordProducer implements Producer{
 			run.setText(sd.format(date));
 		}
 		String fontFamily=style.getFontFamily();
-		if(customStyle!=null && StringUtils.isNotBlank(customStyle.getFontFamily())){
+		if(customStyle!=null && UStringUtils.isNotBlank(customStyle.getFontFamily())){
 			fontFamily=customStyle.getFontFamily();
 		}
-		if(rowStyle!=null && StringUtils.isNotBlank(rowStyle.getFontFamily())){
+		if(rowStyle!=null && UStringUtils.isNotBlank(rowStyle.getFontFamily())){
 			fontFamily=rowStyle.getFontFamily();
 		}
-		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getFontFamily())){
+		if(colStyle!=null && UStringUtils.isNotBlank(colStyle.getFontFamily())){
 			fontFamily=colStyle.getFontFamily();
 		}
-		if(StringUtils.isNotBlank(fontFamily)){
+		if(UStringUtils.isNotBlank(fontFamily)){
 			run.setFontFamily(fontFamily);
 		}
 		int fontSize=style.getFontSize();
@@ -418,13 +418,13 @@ public class WordProducer implements Producer{
 			run.setUnderline(UnderlinePatterns.SINGLE);
 		}
 		String bgcolor=style.getBgcolor();
-		if(customStyle!=null && StringUtils.isNotBlank(customStyle.getBgcolor())){
+		if(customStyle!=null && UStringUtils.isNotBlank(customStyle.getBgcolor())){
 			bgcolor=customStyle.getBgcolor();
 		}
-		if(rowStyle!=null && StringUtils.isNotBlank(rowStyle.getBgcolor())){
+		if(rowStyle!=null && UStringUtils.isNotBlank(rowStyle.getBgcolor())){
 			bgcolor=rowStyle.getBgcolor();
 		}
-		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getBgcolor())){
+		if(colStyle!=null && UStringUtils.isNotBlank(colStyle.getBgcolor())){
 			bgcolor=colStyle.getBgcolor();
 		}
 		if(bgcolor!=null){
@@ -432,13 +432,13 @@ public class WordProducer implements Producer{
 	        ctshd.setFill(toHex(bgcolor.split(",")));  
 		}
 		String forecolor=style.getForecolor();
-		if(customStyle!=null && StringUtils.isNotBlank(customStyle.getForecolor())){
+		if(customStyle!=null && UStringUtils.isNotBlank(customStyle.getForecolor())){
 			forecolor=customStyle.getForecolor();
 		}
-		if(rowStyle!=null && StringUtils.isNotBlank(rowStyle.getForecolor())){
+		if(rowStyle!=null && UStringUtils.isNotBlank(rowStyle.getForecolor())){
 			forecolor=rowStyle.getForecolor();
 		}
-		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getForecolor())){
+		if(colStyle!=null && UStringUtils.isNotBlank(colStyle.getForecolor())){
 			forecolor=colStyle.getForecolor();
 		}
 		if(forecolor!=null){
@@ -567,7 +567,7 @@ public class WordProducer implements Producer{
 			ctborder.setSz(BigInteger.valueOf(DxaUtils.points2dxa(borderWidth)));				
 		}
 		String color=border.getColor();
-		if(StringUtils.isNotBlank(color)){
+		if(UStringUtils.isNotBlank(color)){
 			ctborder.setColor(toHex(color.split(",")));
 		}
 	}

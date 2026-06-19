@@ -24,8 +24,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UIOUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.cache.ResourceCache;
 import com.bstek.ureport.console.ServletAction;
@@ -39,16 +39,16 @@ public class ImageServletAction implements ServletAction{
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String key=req.getParameter("_key");
-		if(StringUtils.isNotBlank(key)){
+		if(UStringUtils.isNotBlank(key)){
 			byte[] bytes=(byte[])ResourceCache.getObject(key);
 			InputStream input=new ByteArrayInputStream(bytes);
 			OutputStream output=resp.getOutputStream();
 			resp.setContentType("image/png");
 			try{
-				IOUtils.copy(input, output);			
+				UIOUtils.copy(input, output);			
 			}finally{
-				IOUtils.closeQuietly(input);
-				IOUtils.closeQuietly(output);
+				UIOUtils.closeQuietly(input);
+				UIOUtils.closeQuietly(output);
 			}
 		}else{
 			//processImage(req, resp);			

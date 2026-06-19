@@ -29,7 +29,7 @@ import java.util.List;
 
 import jakarta.servlet.ServletContext;
 
-import org.apache.commons.io.IOUtils;
+import com.bstek.ureport.utils.UIOUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -104,7 +104,7 @@ public class FileReportProvider implements ReportProvider,ApplicationContextAwar
 		FileOutputStream outStream=null;
 		try{
 			outStream=new FileOutputStream(new File(fullPath));
-			IOUtils.write(content, outStream,"utf-8");
+			UIOUtils.write(content, outStream,"utf-8");
 		}catch(Exception ex){
 			throw new ReportException(ex);
 		}finally{

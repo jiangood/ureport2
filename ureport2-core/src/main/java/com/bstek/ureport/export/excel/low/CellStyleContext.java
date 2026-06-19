@@ -19,7 +19,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFPalette;
@@ -72,16 +72,16 @@ public class CellStyleContext {
 		HSSFCellStyle style=wb.createCellStyle();
 		style.setWrapText(true);
 		String bgcolor=cellStyle.getBgcolor();
-		if(customStyle!=null && StringUtils.isNotBlank(customStyle.getBgcolor())){
+		if(customStyle!=null && UStringUtils.isNotBlank(customStyle.getBgcolor())){
 			bgcolor=customStyle.getBgcolor();
 		}
-		if(rowStyle!=null && StringUtils.isNotBlank(rowStyle.getBgcolor())){
+		if(rowStyle!=null && UStringUtils.isNotBlank(rowStyle.getBgcolor())){
 			bgcolor=rowStyle.getBgcolor();
 		}
-		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getBgcolor())){
+		if(colStyle!=null && UStringUtils.isNotBlank(colStyle.getBgcolor())){
 			bgcolor=colStyle.getBgcolor();
 		}
-		if(StringUtils.isNotEmpty(bgcolor)){
+		if(UStringUtils.isNotEmpty(bgcolor)){
 			style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 			HSSFColor hssfColor=buildHSSFColor(wb,bgcolor);
 			style.setFillForegroundColor(hssfColor.getIndex());
@@ -215,7 +215,7 @@ public class CellStyleContext {
 		if(colStyle!=null && colStyle.getForecolor()!=null){
 			forecolor=colStyle.getForecolor();
 		}
-		if(StringUtils.isEmpty(forecolor)){
+		if(UStringUtils.isEmpty(forecolor)){
 			forecolor="0,0,0";
 		}
 		HSSFColor fontColor=buildHSSFColor(wb,forecolor);
@@ -268,13 +268,13 @@ public class CellStyleContext {
 		CellStyle colStyle=cell.getColumn().getCustomCellStyle();
 		StringBuffer sb=new StringBuffer();
 		String bgcolor=customStyle.getBgcolor();
-		if(rowStyle!=null && StringUtils.isNotBlank(rowStyle.getBgcolor())){
+		if(rowStyle!=null && UStringUtils.isNotBlank(rowStyle.getBgcolor())){
 			bgcolor=rowStyle.getBgcolor();
 		}
-		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getBgcolor())){
+		if(colStyle!=null && UStringUtils.isNotBlank(colStyle.getBgcolor())){
 			bgcolor=colStyle.getBgcolor();
 		}
-		if(StringUtils.isNotEmpty(bgcolor)){
+		if(UStringUtils.isNotEmpty(bgcolor)){
 			sb.append("bgcolor:"+bgcolor);
 		}
 		Border topBorder=customStyle.getTopBorder();

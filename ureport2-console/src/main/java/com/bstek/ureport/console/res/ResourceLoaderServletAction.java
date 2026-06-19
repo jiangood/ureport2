@@ -23,7 +23,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
+import com.bstek.ureport.utils.UIOUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -60,10 +60,10 @@ public class ResourceLoaderServletAction implements ServletAction,ApplicationCon
 		InputStream input=applicationContext.getResource(p).getInputStream();
 		OutputStream output=resp.getOutputStream();
 		try{
-			IOUtils.copy(input, output);			
+			UIOUtils.copy(input, output);			
 		}finally{
-			IOUtils.closeQuietly(input);
-			IOUtils.closeQuietly(output);
+			UIOUtils.closeQuietly(input);
+			UIOUtils.closeQuietly(output);
 		}
 	}
 

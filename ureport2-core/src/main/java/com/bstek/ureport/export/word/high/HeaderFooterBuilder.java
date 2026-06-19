@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -84,7 +84,7 @@ public class HeaderFooterBuilder {
 		Date D=new Date();
 		String date=dateSD.format(D);
 		String time=timeSD.format(D);
-		if(StringUtils.isNotBlank(left)){
+		if(UStringUtils.isNotBlank(left)){
 			ctp = CTP.Factory.newInstance();				
 			para=new XWPFParagraph(ctp, document);
 			para.setAlignment(ParagraphAlignment.LEFT);
@@ -207,7 +207,7 @@ public class HeaderFooterBuilder {
 				}
 			}
 		}
-		if(StringUtils.isNotBlank(center)){
+		if(UStringUtils.isNotBlank(center)){
 			ctp = CTP.Factory.newInstance();				
 			para=new XWPFParagraph(ctp, document);
 			para.setAlignment(ParagraphAlignment.CENTER);
@@ -330,7 +330,7 @@ public class HeaderFooterBuilder {
 				}
 			}
 		}
-		if(StringUtils.isNotBlank(right)){
+		if(UStringUtils.isNotBlank(right)){
 			ctp = CTP.Factory.newInstance();				
 			para=new XWPFParagraph(ctp, document);
 			para.setAlignment(ParagraphAlignment.RIGHT);

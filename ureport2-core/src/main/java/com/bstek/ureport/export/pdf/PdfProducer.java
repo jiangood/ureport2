@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import com.bstek.ureport.utils.UIOUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.build.paging.Page;
 import com.bstek.ureport.chart.ChartData;
@@ -273,16 +273,16 @@ public class PdfProducer implements Producer {
 			}
 		}
 		String bgcolor=style.getBgcolor();
-		if(customStyle!=null && StringUtils.isNotBlank(customStyle.getBgcolor())){
+		if(customStyle!=null && UStringUtils.isNotBlank(customStyle.getBgcolor())){
 			bgcolor=customStyle.getBgcolor();
 		}
-		if(rowStyle!=null && StringUtils.isNotBlank(rowStyle.getBgcolor())){
+		if(rowStyle!=null && UStringUtils.isNotBlank(rowStyle.getBgcolor())){
 			bgcolor=rowStyle.getBgcolor();
 		}
-		if(colStyle!=null && StringUtils.isNotBlank(colStyle.getBgcolor())){
+		if(colStyle!=null && UStringUtils.isNotBlank(colStyle.getBgcolor())){
 			bgcolor=colStyle.getBgcolor();
 		}
-		if(StringUtils.isNotEmpty(bgcolor)){
+		if(UStringUtils.isNotEmpty(bgcolor)){
 			String[] colors=bgcolor.split(",");
 			cell.setBackgroundColor(new BaseColor(Integer.valueOf(colors[0]),Integer.valueOf(colors[1]),Integer.valueOf(colors[2])));
 		}
@@ -338,7 +338,7 @@ public class PdfProducer implements Producer {
 		com.itextpdf.text.Image pdfImg=null;
 		InputStream input=ImageUtils.base64DataToInputStream(base64Data);
 		try{
-			byte[] bytes=IOUtils.toByteArray(input);
+			byte[] bytes=UIOUtils.toByteArray(input);
 			pdfImg=com.itextpdf.text.Image.getInstance(bytes);
 			float imgWidth=pdfImg.getWidth();
 			float imgHeight=pdfImg.getHeight();
@@ -352,7 +352,7 @@ public class PdfProducer implements Producer {
 			height=UnitUtils.pixelToPoint(height-2);
 			pdfImg.scaleToFit(width,height);
 		}finally{
-			IOUtils.closeQuietly(input);
+			UIOUtils.closeQuietly(input);
 		}
 		return pdfImg;
 	}

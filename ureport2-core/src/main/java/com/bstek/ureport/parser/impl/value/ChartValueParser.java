@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.parser.impl.value;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.dom4j.Element;
 
 import com.bstek.ureport.chart.Chart;
@@ -96,11 +96,11 @@ public class ChartValueParser extends ValueParser {
 		if(type.equals("title")){
 			TitleOption option=new TitleOption();
 			String display=element.attributeValue("display");
-			if(StringUtils.isNotBlank(display)){
+			if(UStringUtils.isNotBlank(display)){
 				option.setDisplay(Boolean.valueOf(display));
 			}
 			String position=element.attributeValue("position");
-			if(StringUtils.isNotBlank(position)){
+			if(UStringUtils.isNotBlank(position)){
 				option.setPosition(Position.valueOf(position));
 			}
 			String text=element.attributeValue("text");
@@ -109,22 +109,22 @@ public class ChartValueParser extends ValueParser {
 		}else if(type.equals("legend")){
 			LegendOption option=new LegendOption();
 			String display=element.attributeValue("display");
-			if(StringUtils.isNotBlank(display)){
+			if(UStringUtils.isNotBlank(display)){
 				option.setDisplay(Boolean.valueOf(display));
 			}
 			String position=element.attributeValue("position");
-			if(StringUtils.isNotBlank(position)){
+			if(UStringUtils.isNotBlank(position)){
 				option.setPosition(Position.valueOf(position));
 			}
 			target=option;
 		}else if(type.equals("animation")){
 			AnimationsOption option=new AnimationsOption();
 			String duration=element.attributeValue("duration");
-			if(StringUtils.isNotBlank(duration)){
+			if(UStringUtils.isNotBlank(duration)){
 				option.setDuration(Integer.valueOf(duration));
 			}
 			String easing=element.attributeValue("easing");
-			if(StringUtils.isNotBlank(easing)){
+			if(UStringUtils.isNotBlank(easing)){
 				option.setEasing(Easing.valueOf(easing));
 			}
 			target=option;
@@ -137,7 +137,7 @@ public class ChartValueParser extends ValueParser {
 	
 	private void parseAxes(Element element,BaseAxes axes){
 		String rotation=element.attributeValue("rotation");
-		if(StringUtils.isNotBlank(rotation)){
+		if(UStringUtils.isNotBlank(rotation)){
 			axes.setRotation(Integer.valueOf(rotation));
 		}
 		for(Object obj:element.elements()){
@@ -149,7 +149,7 @@ public class ChartValueParser extends ValueParser {
 			if(name.equals("scale-label")){
 				ScaleLabel label=new ScaleLabel();
 				String display=ele.attributeValue("display");
-				if(StringUtils.isNotBlank(display)){
+				if(UStringUtils.isNotBlank(display)){
 					label.setDisplay(Boolean.valueOf(display));
 				}
 				String labelString=ele.attributeValue("label-string");
@@ -218,11 +218,11 @@ public class ChartValueParser extends ValueParser {
 			String seriesProperty=element.attributeValue("series-property");
 			ds.setSeriesProperty(seriesProperty);
 			String collectType=element.attributeValue("collect-type");
-			if(StringUtils.isNotBlank(collectType)){
+			if(UStringUtils.isNotBlank(collectType)){
 				ds.setCollectType(CollectType.valueOf(collectType));
 			}
 			String seriesType=element.attributeValue("series-type");
-			if(StringUtils.isNotBlank(seriesType)){
+			if(UStringUtils.isNotBlank(seriesType)){
 				ds.setSeriesType(SeriesType.valueOf(seriesType));
 			}
 			ds.setSeriesText(element.attributeValue("series-text"));

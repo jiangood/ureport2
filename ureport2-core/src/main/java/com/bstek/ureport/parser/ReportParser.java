@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -143,7 +143,7 @@ public class ReportParser {
 			int rowNumber=cell.getRowNumber();
 			int colNumber=cell.getColumnNumber();
 			String leftParentCellName=cell.getLeftParentCellName();
-			if(StringUtils.isNotBlank(leftParentCellName)){
+			if(UStringUtils.isNotBlank(leftParentCellName)){
 				if(!leftParentCellName.equals("root")){
 					CellDefinition targetCell=cellsMap.get(leftParentCellName);
 					if(targetCell==null){
@@ -158,7 +158,7 @@ public class ReportParser {
 				}
 			}
 			String topParentCellName=cell.getTopParentCellName();
-			if(StringUtils.isNotBlank(topParentCellName)){
+			if(UStringUtils.isNotBlank(topParentCellName)){
 				if(!topParentCellName.equals("root")){
 					CellDefinition targetCell=cellsMap.get(topParentCellName);
 					if(targetCell==null){

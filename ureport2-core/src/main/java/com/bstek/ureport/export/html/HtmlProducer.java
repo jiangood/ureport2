@@ -18,8 +18,8 @@ package com.bstek.ureport.export.html;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.bstek.ureport.utils.UStringEscapeUtils;
+import com.bstek.ureport.utils.UStringUtils;
 
 import com.bstek.ureport.build.BindData;
 import com.bstek.ureport.build.Context;
@@ -58,7 +58,7 @@ public class HtmlProducer{
 		int tableWidth=singleTableWidth*pageSize+columnMargin*(pageSize-1);
 		String bgStyle="";
 		String bgImage=context.getReport().getPaper().getBgImage();
-		if(StringUtils.isNotBlank(bgImage)){
+		if(UStringUtils.isNotBlank(bgImage)){
 			bgStyle=";background:url("+bgImage+") no-repeat";
 		}
 		StringBuilder sb=new StringBuilder();
@@ -96,7 +96,7 @@ public class HtmlProducer{
 		int tableWidth=buildTableWidth(columns);
 		String bgStyle="";
 		String bgImage=context.getReport().getPaper().getBgImage();
-		if(StringUtils.isNotBlank(bgImage)){
+		if(UStringUtils.isNotBlank(bgImage)){
 			bgStyle=";background:url("+bgImage+") no-repeat";
 		}
 		if(breakPage){
@@ -152,7 +152,7 @@ public class HtmlProducer{
 				sb.append(">");
 				boolean hasLink=false;
 				String linkURL=cell.getLinkUrl();
-				if(StringUtils.isNotBlank(linkURL)){
+				if(UStringUtils.isNotBlank(linkURL)){
 					Expression urlExpression=cell.getLinkUrlExpression();
 					if(urlExpression!=null){
 						ExpressionData<?> exprData=urlExpression.execute(cell, cell, context);
@@ -184,7 +184,7 @@ public class HtmlProducer{
 					}
 					hasLink=true;
 					String urlParameter=cell.buildLinkParameters(context);
-					if(StringUtils.isNotBlank(urlParameter)) {
+					if(UStringUtils.isNotBlank(urlParameter)) {
 						if(linkURL.indexOf("?")==-1){
 							linkURL+="?"+urlParameter;
 						}else{
@@ -192,7 +192,7 @@ public class HtmlProducer{
 						}						
 					}
 					String target=cell.getLinkTargetWindow();
-					if(StringUtils.isBlank(target))target="_self";
+					if(UStringUtils.isBlank(target))target="_self";
 					sb.append("<a href=\""+linkURL+"\" target=\""+target+"\">");
 				}
 				Object obj=(cell.getFormatData()== null) ? "" : cell.getFormatData();
@@ -200,7 +200,7 @@ public class HtmlProducer{
 					Image img=(Image)obj;
 					String path=img.getPath();
 					String imageType="image/png";
-					if(StringUtils.isNotBlank(path)){
+					if(UStringUtils.isNotBlank(path)){
 						path=path.toLowerCase();
 						if(path.endsWith(".jpg") || path.endsWith(".jpeg")){
 							imageType="image/jpeg";
@@ -227,7 +227,7 @@ public class HtmlProducer{
 					sb.append("</div>");
 				}else{
 					String text=obj.toString();
-					text=StringEscapeUtils.escapeHtml4(text);
+					text=UStringEscapeUtils.escapeHtml4(text);
 					text=text.replaceAll("\r\n", "<br>");
 					text=text.replaceAll("\n", "<br>");
 					text=text.replaceAll(" ", "&nbsp;");
@@ -283,7 +283,7 @@ public class HtmlProducer{
 		if(colStyle!=null){
 			forecolor=colStyle.getForecolor();
 		}
-		if(StringUtils.isNotBlank(forecolor)){
+		if(UStringUtils.isNotBlank(forecolor)){
 			sb.append("color:rgb("+forecolor+");");
 		}
 		String bgcolor=null;
@@ -296,7 +296,7 @@ public class HtmlProducer{
 		if(colStyle!=null){
 			bgcolor=colStyle.getBgcolor();
 		}
-		if(StringUtils.isNotBlank(bgcolor)){
+		if(UStringUtils.isNotBlank(bgcolor)){
 			sb.append("background-color:rgb("+bgcolor+");");
 		}
 		String fontFamily=null;
@@ -309,7 +309,7 @@ public class HtmlProducer{
 		if(colStyle!=null){
 			fontFamily=colStyle.getFontFamily();
 		}
-		if(StringUtils.isNotBlank(fontFamily)){
+		if(UStringUtils.isNotBlank(fontFamily)){
 			sb.append("font-family:"+fontFamily+";");
 		}
 		int fontSize=0;
