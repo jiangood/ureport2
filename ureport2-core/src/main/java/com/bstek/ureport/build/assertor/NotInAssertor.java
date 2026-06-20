@@ -31,27 +31,27 @@ public class NotInAssertor implements Assertor {
 		if(right instanceof List){
 			List<?> list=(List<?>)right;
 			for(Object obj:list){
-				if(!left.equals(obj)){
-					return true;
+				if(left.equals(obj)){
+					return false;
 				}
 			}
-			return false;
+			return true;
 		}else if(right instanceof Object[]){
 			Object[] objs=(Object[])right;
 			for(Object obj:objs){
-				if(!left.equals(obj)){
-					return true;
+				if(left.equals(obj)){
+					return false;
 				}
 			}
-			return false;
+			return true;
 		}else if(right instanceof String){
 			String[] array=right.toString().split(",");
 			for(String str:array){
-				if(!left.equals(str)){
-					return true;
+				if(left.equals(str)){
+					return false;
 				}
 			}
-			return false;
+			return true;
 		}
 		return !left.equals(right);
 	}
