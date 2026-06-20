@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bstek.ureport.utils.UStringUtils;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.bstek.ureport.build.Dataset;
 import com.bstek.ureport.definition.datasource.DatasourceDefinition;

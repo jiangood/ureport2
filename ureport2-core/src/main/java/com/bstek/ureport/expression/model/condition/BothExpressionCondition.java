@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.expression.model.condition;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.expression.model.Expression;

@@ -39,9 +39,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import com.bstek.ureport.utils.UPropertyUtils;
 import com.bstek.ureport.utils.UStringUtils;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.bstek.ureport.UReportEngine;
 import com.bstek.ureport.utils.UReportJdbcUtils;

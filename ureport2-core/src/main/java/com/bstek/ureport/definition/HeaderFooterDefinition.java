@@ -18,7 +18,7 @@ package com.bstek.ureport.definition;
 import java.io.Serializable;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.paging.HeaderFooter;

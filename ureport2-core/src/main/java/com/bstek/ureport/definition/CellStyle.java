@@ -19,7 +19,7 @@ import java.awt.Font;
 import java.io.Serializable;
 
 import com.bstek.ureport.utils.UStringUtils;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.bstek.ureport.export.pdf.font.FontBuilder;
 

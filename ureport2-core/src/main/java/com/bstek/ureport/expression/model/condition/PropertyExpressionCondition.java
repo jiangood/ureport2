@@ -16,7 +16,7 @@
 package com.bstek.ureport.expression.model.condition;
 
 import com.bstek.ureport.utils.UStringUtils;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;

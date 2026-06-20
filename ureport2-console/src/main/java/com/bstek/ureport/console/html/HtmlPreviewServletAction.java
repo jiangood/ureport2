@@ -31,7 +31,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.bstek.ureport.utils.UStringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.build.ReportBuilder;

@@ -17,7 +17,7 @@ package com.bstek.ureport.definition.value;
 
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Jacky.gao

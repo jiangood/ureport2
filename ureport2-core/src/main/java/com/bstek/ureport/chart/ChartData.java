@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.chart;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.bstek.ureport.cache.CacheUtils;
 import com.bstek.ureport.model.Cell;

@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.bstek.ureport.utils.UStringUtils;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.bstek.ureport.build.ReportBuilder;
 import com.bstek.ureport.console.BaseServletAction;

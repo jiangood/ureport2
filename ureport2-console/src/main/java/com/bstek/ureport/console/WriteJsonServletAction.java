@@ -22,9 +22,9 @@ import java.text.SimpleDateFormat;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 
 /**
@@ -36,8 +36,8 @@ public abstract class WriteJsonServletAction extends BaseServletAction{
 		resp.setContentType("text/json");
 		resp.setCharacterEncoding("UTF-8");
 		ObjectMapper mapper=new ObjectMapper();
-		mapper.setSerializationInclusion(Inclusion.NON_NULL);
-		mapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,false);
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		OutputStream out = resp.getOutputStream();
 		try {

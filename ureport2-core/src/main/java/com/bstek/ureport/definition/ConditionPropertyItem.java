@@ -17,7 +17,7 @@ package com.bstek.ureport.definition;
 
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.bstek.ureport.expression.model.Condition;
 import com.bstek.ureport.expression.model.Expression;
