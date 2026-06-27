@@ -24,7 +24,7 @@ UReport2 是第一款基于 Apache-2.0 协议开源的中式报表引擎。
 
 # 安装与配置
 
-### Spring Boot 3.x 项目（推荐）
+### Spring Boot 3，4 项目（推荐）
 
 在 `pom.xml` 中添加依赖：
 
